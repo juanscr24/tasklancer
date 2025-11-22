@@ -1,14 +1,15 @@
 'use client'
 import { useTheme } from '@/utils/ThemeProvider'
+import { Moon, Sun } from 'lucide-react'
 
-export const ButtonMode = () => {
+export const ButtonMode = ({ className }: { className?: string }) => {
     const { toggleTheme, theme } = useTheme()
     return (
         <button
-            className='cursor-pointer hover:text-black dark:hover:text-white hover:scale-105 transition-all duration-500 text-[#484848] dark:text-[#B0B0B0] min-h-[44px] min-w-[44px] flex items-center justify-center'
+            className={`bg-(--btn-1) text-white rounded-md ${className}`}
             onClick={toggleTheme}
             aria-label={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}>
-            {theme == 'light' ? 'Noche' : 'Dia'}
+            {theme == 'light' ? <Moon /> : <Sun />}
         </button>
     )
 }
