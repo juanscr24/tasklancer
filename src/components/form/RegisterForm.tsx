@@ -1,33 +1,39 @@
+'use client'
+
 import { Button, Input } from "@/components/ui"
+import { useTranslations } from "next-intl"
 
 export const RegisterForm = () => {
+    const t = useTranslations('form');
+    const tAuth = useTranslations('auth');
+
     return (
         <>
             <Input
                 id="name"
                 type="text"
-                label="Full Name"
-                placeholder="Write your name"
+                label={t('fullName')}
+                placeholder={t('fullNamePlaceholder')}
             />
             <Input
                 id="email"
                 type="email"
-                placeholder="Email"
-                label="you@example.com"
+                label={t('email')}
+                placeholder={t('emailPlaceholder')}
             />
             <Input
                 id="password"
                 type="password"
-                label="Password"
-                placeholder="********"
+                label={t('password')}
+                placeholder={t('passwordPlaceholder')}
             />
             <Input
                 id="confirm-password"
                 type="password"
-                label="Confirm Password"
-                placeholder="********"
+                label={t('confirmPassword')}
+                placeholder={t('passwordPlaceholder')}
             />
-            <Button type="submit">Register</Button>
+            <Button type="submit">{tAuth('register')}</Button>
         </>
     )
 }

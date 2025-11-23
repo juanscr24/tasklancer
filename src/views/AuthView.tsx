@@ -2,11 +2,13 @@
 
 import { AuthForm } from "@/components/features/AuthForm";
 import { AuthImage } from "@/components/features/AuthImage";
-import { Button } from "@/components/ui";
 import Image from "next/image";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "@/components/ui";
 
 export const AuthView = () => {
+    const t = useTranslations('auth');
     const [isLogin, setIsLogin] = useState(true);
     const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -19,6 +21,7 @@ export const AuthView = () => {
     const handleTransitionEnd = () => {
         setIsTransitioning(false);
     };
+
     return (
         <div
             className={`relative w-full h-screen overflow-hidden shadow-lg bg-(--bg-1) ${isLogin ? "login" : "register"
@@ -32,23 +35,24 @@ export const AuthView = () => {
             >
                 <>
                     <Image className="w-14 h-14 bg-(--btn-1) rounded-md mb-6" src="/logo.png" alt="Logo" width={200} height={200} />
-                    <h2 className="text-3xl font-bold text-(--text-1)">{isLogin ? "Welcome Back" : "Welcome"}</h2>
-                    <p className="text-lg text-(--text-2) mb-8">{isLogin ? "Login to your account" : "Join us to manage your tasks"}</p>
+                    <h2 className="text-3xl font-bold text-(--text-1)">{isLogin ? t('welcomeBack') : t('welcome')}</h2>
+                    <p className="text-lg text-(--text-2) mb-8">{isLogin ? t('loginSubtitle') : t('registerSubtitle')}</p>
                 </>
                 {/* FORM SECTION */}
                 <AuthForm
                     isLogin={isLogin}
                 />
                 <div className="flex items-center gap-2 mt-5 w-fit">
-                    <p className="text-(--text-2) w-fit">{isLogin ? "Don't have an account?" : "Already have an account?"}</p>
+                    <p className="text-(--text-2) w-fit">{isLogin ? t('dontHaveAccount') : t('alreadyHaveAccount')}</p>
                     <button
                         type="button"
                         onClick={toggleForm}
                         className="p-0 text-(--btn-1) cursor-pointer w-fit"
                     >
-                        {isLogin ? "Sign Up" : "Sign In"}
+                        {isLogin ? t('signUp') : t('signIn')}
                     </button>
                 </div>
+                <LanguageSwitcher className="absolute top-3 right-3" />
             </div>
 
             {/* IMAGE SECTION */}
