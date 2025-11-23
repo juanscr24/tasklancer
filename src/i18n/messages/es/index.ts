@@ -1,9 +1,9 @@
 import common from './common.json';
-import auth from './auth.json';
-import form from './form.json';
-import dashboard from './dashboard.json';
+import auth from './pages/auth.json';
+import form from './components/form.json';
+import dashboard from './pages/dashboard.json';
 import metadata from './metadata.json';
-import language from './language.json';
+import sidebar from './components/sidebar.json';
 
 export default {
     common,
@@ -11,5 +11,5 @@ export default {
     form,
     dashboard,
     metadata,
-    language
+    sidebar
 };

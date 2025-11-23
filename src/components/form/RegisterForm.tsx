@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Input } from "@/components/ui"
+import { Button, Input } from "@components"
 import { useTranslations } from "next-intl"
 
 export const RegisterForm = () => {

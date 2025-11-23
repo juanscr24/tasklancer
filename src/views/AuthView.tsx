@@ -1,11 +1,8 @@
 'use client'
-
-import { AuthForm } from "@/components/features/AuthForm";
-import { AuthImage } from "@/components/features/AuthImage";
 import Image from "next/image";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { LanguageSwitcher } from "@/components/ui";
+import { LanguageSwitcher, AuthForm, AuthImage } from "@components";
 
 export const AuthView = () => {
     const t = useTranslations('auth');

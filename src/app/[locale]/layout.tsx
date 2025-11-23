@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import { ThemeProvider } from "@/utils/ThemeProvider";
+import type { Metadata } from "next";
 import { getTheme } from "@/utils/theme";
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
+import { getMessages } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/utils/ThemeProvider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",

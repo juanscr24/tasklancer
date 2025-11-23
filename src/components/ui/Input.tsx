@@ -1,4 +1,4 @@
-import { InputProps } from "@/types/InputProps"
+import { InputProps } from "@/types"
 
 export const Input = ({ type, placeholder, label, icon, id }: InputProps) => {
     return (

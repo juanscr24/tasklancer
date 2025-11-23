@@ -1,17 +1,12 @@
 'use client'
 
 import Image from 'next/image';
-import { ButtonMode } from '../ui';
-import { img_login, img_register } from '../../../public/images/img';
+import { AuthImageProps } from '@/types';
+import { ButtonMode } from '@components'
 import { useTranslations } from 'next-intl';
+import { img_login, img_register } from '@public/images/img';
 
-export interface ImageAuthProps {
-    handleTransitionEnd: () => void;
-    isLogin: boolean;
-    isTransitioning: boolean;
-}
-
-export const AuthImage = ({ handleTransitionEnd, isLogin, isTransitioning }: ImageAuthProps) => {
+export const AuthImage = ({ handleTransitionEnd, isLogin, isTransitioning }: AuthImageProps) => {
     const t = useTranslations('auth');
 
     return (
@@ -38,7 +33,7 @@ export const AuthImage = ({ handleTransitionEnd, isLogin, isTransitioning }: Ima
                 <p className="w-full text-center px-10 absolute bottom-10 left-1/2 transform -translate-x-1/2 text-3xl font-bold text-[#D9D9D9] z-20 shadow-lg">
                     {isLogin ? t('imageLoginText') : t('imageRegisterText')}
                 </p>
-                <ButtonMode className={`${isLogin ? 'right-0' : 'left-10'} absolute top-5 p-2 transform -translate-x-1/2 z-20`} />
+                <ButtonMode className={`${isLogin ? 'right-0' : 'left-10'} absolute top-5 p-2 transform -translate-x-1/2 z-20 bg-(--btn-1) hover:bg-(--btn-1)/80`} />
             </div>
         </div>
     )
