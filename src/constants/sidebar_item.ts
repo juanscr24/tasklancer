@@ -1,7 +1,9 @@
-import { Home, Briefcase, TrendingUp } from 'lucide-react';
+import { HiHome } from "react-icons/hi2";
+import { TrendingUp } from 'lucide-react';
+import { MdFolderCopy } from "react-icons/md";
 
 export const navItems = [
-    { icon: Home, href: '/dashboard', labelKey: 'home' },
-    { icon: Briefcase, href: '/projects', labelKey: 'projects' },
+    { icon: HiHome, href: '/dashboard', labelKey: 'home' },
+    { icon: MdFolderCopy, href: '/projects', labelKey: 'projects' },
     { icon: TrendingUp, href: '/clients', labelKey: 'clients' },
 ];
