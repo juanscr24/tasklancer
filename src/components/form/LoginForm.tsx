@@ -21,7 +21,7 @@ export const LoginForm = () => {
                 label={t('password')}
                 placeholder={t('passwordPlaceholder')}
             />
-            <Button type="submit">{tAuth('signIn')}</Button>
+            <Button primary type="submit">{tAuth('signIn')}</Button>
         </>
     )
 }

@@ -33,7 +33,7 @@ export const RegisterForm = () => {
                 label={t('confirmPassword')}
                 placeholder={t('passwordPlaceholder')}
             />
-            <Button type="submit">{tAuth('register')}</Button>
+            <Button primary type="submit">{tAuth('register')}</Button>
         </>
     )
 }

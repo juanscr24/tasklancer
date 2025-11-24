@@ -1,6 +1,8 @@
+import ProjectView from "@/views/ProjectView"
+
 const Projects = () => {
     return (
-        <div>Projects</div>
+        <ProjectView />
     )
 }
 
