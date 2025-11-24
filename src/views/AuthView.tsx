@@ -31,7 +31,7 @@ export const AuthView = () => {
                 onTransitionEnd={handleTransitionEnd}
             >
                 <>
-                    <Image className="w-14 h-14 bg-(--btn-1) rounded-md mb-6" src="/logo.png" alt="Logo" width={200} height={200} />
+                    <Image className="w-14 h-14 bg-(--btn-1) rounded-md mb-6" src="/logo/logo.png" alt="Logo" width={200} height={200} />
                     <h2 className="text-3xl font-bold text-(--text-1)">{isLogin ? t('welcomeBack') : t('welcome')}</h2>
                     <p className="text-lg text-(--text-2) mb-8">{isLogin ? t('loginSubtitle') : t('registerSubtitle')}</p>
                 </>
