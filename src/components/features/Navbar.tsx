@@ -16,9 +16,7 @@ const Navbar = () => {
     useEffect(() => setMounted(true), []);
 
     return (
-        // Quité el padding del nav, el contenedor de adentro se encarga del ancho
         <nav className="w-full bg-(--bg-1) border-b border-(--text-2)/10 transition-colors duration-300">
-            {/* CORRECCIÓN CLAVE: Usamos max-w-7xl y px-8 para que coincida EXACTAMENTE con TextsSection */}
             <div className="max-w-8/10 mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
 
