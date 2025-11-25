@@ -6,6 +6,7 @@
     /* 🎨 COLORES BASE (se sobreescriben según el tema) */
     --bg-1: #FFFFFF;
     --bg-2: #F6F6F8;
+    --bg-3: #FFFFFF;
 
     --btn-1: #4A90E2;
     --btn-2: #F4F7F9;
@@ -14,19 +15,28 @@
     --text-2: #6B7280;
 
     /* Prioridades (no cambian) */
-    --priority-low: #4ADE80;
-    --priority-medium: #FACC15;
-    --priority-high: #EF4444;
+    --priority-low-1: #1450C8;
+    --priority-medium-1: #F5A623;
+    --priority-high-1: #D0021B;
+
+    --border-1: #E2E8F0;
+
+
 }
 
 /* 🌙 DARK MODE */
 .dark {
     --bg-1: #101622;
     --bg-2: #1A2336;
+    --bg-3: #1C2639;
 
     --btn-1: #135BEC;
     --btn-2: #232F48;
 
     --text-1: #FFFFFF;
     --text-2: #CBD5E1;
+
+
+    --border-1: #324467;
+
 }
