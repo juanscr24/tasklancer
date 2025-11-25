@@ -3,20 +3,17 @@
 import Image from 'next/image'
 import { useTransition } from 'react'
 import { LanguageSwitcherProps } from '@/types'
-import { useLocale } from 'next-intl'
-import { useRouter, usePathname } from '@/i18n/routing'
+import { useLocaleStore } from '@/stores/localeStore'
 
 export const LanguageSwitcher = ({ className }: LanguageSwitcherProps) => {
-    const locale = useLocale()
-    const router = useRouter()
-    const pathname = usePathname()
+    const { locale, setLocale } = useLocaleStore()
     const [isPending, startTransition] = useTransition()
 
     const toggleLanguage = () => {
         const newLocale = locale === 'es' ? 'en' : 'es'
 
         startTransition(() => {
-            router.replace(pathname, { locale: newLocale })
+            setLocale(newLocale)
         })
     }
 

@@ -4,6 +4,7 @@ export { Button } from './ui/Button'
 export { ButtonMode } from './ui/ButtonMode'
 export { LanguageSwitcher } from './ui/LanguageSwitcher'
 export { Modal } from './ui/Modal'
+export { SearchBar } from './ui/SearchBar'
 
 // Form
 export { LoginForm } from './form/LoginForm'

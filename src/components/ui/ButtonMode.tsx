@@ -1,10 +1,10 @@
 'use client'
 import { Moon, Sun } from 'lucide-react'
 import { ButtonModeProps } from '@/types'
-import { useTheme } from '@/utils/ThemeProvider'
+import { useThemeStore } from '@/stores/themeStore'
 
 export const ButtonMode = ({ className }: ButtonModeProps) => {
-    const { toggleTheme, theme } = useTheme()
+    const { toggleTheme, theme } = useThemeStore()
     return (
         <button
             className={`hover:scale-103 text-(--text-1) transition-all duration-200 cursor-pointer rounded-md ${className}`}

@@ -1,19 +1,17 @@
 'use client'
 import Image from "next/image";
-import { useState } from "react";
-import { Link } from "@/i18n/routing";
+import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 import { CgLogOut } from "react-icons/cg";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { useTheme } from "@/utils/ThemeProvider";
+import { useThemeStore } from "@/stores/themeStore";
 import { Eclipse, Languages } from "lucide-react";
 import { navItems } from "@/constants/sidebar_item";
 import { ButtonMode, LanguageSwitcher } from "@components";
 
 export const Sidebar = () => {
-    const [isOpen, setIsOpen] = useState(false)
-    const { theme } = useTheme()
+    const { theme } = useThemeStore()
     const pathname = usePathname()
 
     const t = useTranslations('sidebar')
