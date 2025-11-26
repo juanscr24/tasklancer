@@ -14,13 +14,12 @@
     --text-1: #111827;
     --text-2: #6B7280;
 
+    --border-1: #E2E8F0;
+
     /* Prioridades (no cambian) */
     --priority-low-1: #1450C8;
     --priority-medium-1: #F5A623;
     --priority-high-1: #D0021B;
-
-    --border-1: #E2E8F0;
-
 
 }
 
@@ -39,4 +38,22 @@
 
     --border-1: #324467;
 
+}
+
+/* 📜 CUSTOM SCROLLBAR */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--text-2);
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--btn-1);
 }

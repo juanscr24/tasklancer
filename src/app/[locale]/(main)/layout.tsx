@@ -11,7 +11,7 @@ export default function MainLayout({ children }: Props) {
             {/* SIDEBAR */}
             <Sidebar />
             {/* CONTENIDO */}
-            <main className=" w-full  ">
+            <main className="ml-60">
                 {children}
             </main>
         </div>
