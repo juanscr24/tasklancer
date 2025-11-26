@@ -1,9 +1,8 @@
-import { Button } from '@/components';
-import { Bell, Search } from 'lucide-react';
 import { CardResumen } from '@/components/ui/CardResumen';
 import { CardUrgentTasks } from '@/components/ui/CardUrgentTasks';
 import { CardActiveProjects } from '@/components/ui/CardActiveProjects';
 import { CardFinancialSnapshot } from '@/components/ui/CardFinancialSnapshot';
+import { HeaderSearch } from '@/components/features/HeaderSearch';
 
 export const DashboardView = () => {
     // Datos de ejemplo para las tarjetas
@@ -31,30 +30,10 @@ export const DashboardView = () => {
 
     return (
         <div className="flex min-h-screen bg-(--bg-1) text-white font-sans">
-
-
             {/* Main Content - Offset by sidebar width (w-60 = 15rem = 240px) */}
             <div className="flex-1 flex flex-col">
                 {/* Header */}
-                <header className="flex justify-between items-center px-8 py-6 border-b border-(--border-1) bg-(--bg-1)">
-                    {/* Search Bar */}
-                    <div className="relative w-96">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <Search className="h-4 w-4 text-(--text-2)" />
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Search ..."
-                            className="block w-full pl-10 pr-3 py-2.5 border border-(--border-1) rounded-lg leading-5 bg-(--bg-1) text-(--text-2) placeholder-(--text-2) focus:outline-none focus:bg-(--bg-1) focus:border-(--border-1) sm:text-sm transition duration-150 ease-in-out"
-                        />
-                    </div>
-
-                    {/* Notification Bell */}
-                    <button className="p-2 rounded-full bg-(--bg-1) text-(--text-2) hover:text-white hover:bg-(--bg-2) focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                        <Bell className="h-5 w-5" />
-                    </button>
-                </header>
-
+                <HeaderSearch />
                 <main className="flex-1 p-8 overflow-y-auto">
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-(--text-1)">Welcome back, XXX</h1>

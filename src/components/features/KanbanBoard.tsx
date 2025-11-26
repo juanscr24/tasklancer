@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useProjectStore } from '@/stores/projectStore'
 import { KanbanColumn } from './KanbanColumn'
 import { Task, TaskStatus } from '@/types/features/project'
+import { Button } from '@components'
 
 export const KanbanBoard = () => {
     const { tasks, selectedProjectId, updateTask } = useProjectStore()
@@ -39,19 +40,20 @@ export const KanbanBoard = () => {
     }
 
     return (
-        <div className="flex-1 h-screen bg-(--bg-1) p-6">
+        <div className="flex-1 bg-(--bg-1) p-6">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
                     <h1 className="text-(--text-1) text-3xl font-semibold">Task Board</h1>
                 </div>
-                <button
+                <Button
+                    className="text-sm py-3 px-2 w-25! text-white"
+                    primary
                     onClick={() => setShowNewTaskModal(true)}
-                    className="bg-(--btn-1) hover:bg-(--btn-2) text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2"
+                    title="New Task"
                 >
-                    <span className="text-xl">+</span>
-                    New Task
-                </button>
+                    + New Task
+                </Button>
             </div>
 
             {/* Kanban Columns */}

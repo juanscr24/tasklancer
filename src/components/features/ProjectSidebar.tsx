@@ -22,12 +22,12 @@ export const ProjectSidebar = () => {
     }
 
     return (
-        <div className="w-80 h-screen flex flex-col bg-(--bg-2) py-7 px-4 border-r border-(--bg-2)">
+        <div className="w-80 flex flex-col bg-(--bg-2) py-7 px-4 border-r border-(--bg-2)">
             {/* Header */}
-            <div className="flex gap-4 items-center mb-6">
+            <div className="flex gap-4 justify-between mb-6">
                 <h2 className="text-3xl text-(--text-1) font-bold">Projects</h2>
                 <Button
-                    className="text-sm py-2 px-4 text-white"
+                    className="text-sm py-2 px-2 w-25! text-white"
                     primary
                     onClick={() => setShowNewProjectModal(true)}
                     title="New Project"
@@ -55,8 +55,8 @@ export const ProjectSidebar = () => {
                             key={project.id}
                             onClick={() => setSelectedProject(project.id)}
                             className={`p-4 rounded-lg cursor-pointer transition-all duration-200 ${isSelected
-                                    ? 'bg-(--btn-1) text-white'
-                                    : 'bg-(--bg-1) hover:bg-(--bg-2) text-(--text-1)'
+                                ? 'bg-(--btn-1) text-white'
+                                : 'bg-(--bg-1) hover:bg-(--bg-2) text-(--text-1)'
                                 }`}
                         >
                             {/* Project Header */}

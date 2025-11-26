@@ -1,7 +1,5 @@
-const Clients = () => {
-    return (
-        <div>Clients</div>
-    )
-}
+import { ClientsView } from '@/views/ClientsView'
 
-export default Clients
+export default function ClientsPage() {
+    return <ClientsView />
+}
