@@ -34,7 +34,7 @@ export const DashboardView = () => {
 
 
             {/* Main Content - Offset by sidebar width (w-60 = 15rem = 240px) */}
-            <div className="flex-1 flex flex-col ml-60">
+            <div className="flex-1 flex flex-col">
                 {/* Header */}
                 <header className="flex justify-between items-center px-8 py-6 border-b border-(--border-1) bg-(--bg-1)">
                     {/* Search Bar */}
