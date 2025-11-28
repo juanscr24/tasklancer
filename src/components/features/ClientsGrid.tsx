@@ -11,7 +11,7 @@ interface ClientsGridProps {
 
 export const ClientsGrid = ({ clients, onViewProjects, onMenuClick }: ClientsGridProps) => {
     return (
-        <div className="grid grid-cols-5 gap-6">
+        <div className="grid grid-cols-3 gap-6">
             {clients.map((client) => (
                 <ClientCard
                     key={client.id}

@@ -58,20 +58,8 @@ export const Sidebar = () => {
 
                 {/* User Profile */}
                 <section className="flex flex-col gap-2 w-full">
-                    <div className="flex py-3 w-full justify-between items-center text-(--text-2) px-3.5 border-t-2 border-(--bg-2) mt-6 pt-4">
-                        <div className="flex items-center gap-4">
-                            <Eclipse />
-                            <h3>{t('mode')}: </h3>
-                        </div>
-                        <ButtonMode className="text-(--text-2)" />
-                    </div>
-                    <div className="flex py-3 w-full justify-between items-center text-(--text-2) px-3.5">
-                        <div className="flex items-center gap-4">
-                            <Languages />
-                            <h3>{t('language')}: </h3>
-                        </div>
-                        <LanguageSwitcher className="text-(--text-2) -mr-3" />
-                    </div>
+                    <div className="border-t-2 border-(--bg-2) mb-3.5"></div>
+
                     <div className={`flex justify-between px-3.5 py-3 items-center rounded-lg transition-all duration-200 ${pathname.includes('/profile')
                         ? 'bg-(--btn-1) text-(--text-1)'
                         : 'text-(--text-2) bg-(--bg-2) hover:bg-(--btn-1) hover:text-(--text-1)'

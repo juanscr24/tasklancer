@@ -2,7 +2,6 @@
 
 import { ClientsHeader } from '@/components/features/ClientsHeader'
 import { ClientsGrid } from '@/components/features/ClientsGrid'
-import { HeaderSearch } from '@/components'
 
 export const ClientsView = () => {
     // Mock data - esto se reemplazará con datos reales del store o API
@@ -65,10 +64,9 @@ export const ClientsView = () => {
     }
 
     return (
-        <div className="flex min-h-screen bg-(--bg-1)">
+        <div className="flex min-h-[calc(100vh-95px)] bg-(--bg-1)">
             <div className="flex-1 flex flex-col">
                 {/* Header */}
-                <HeaderSearch />
                 <ClientsHeader onAddClient={handleAddClient} />
 
                 {/* Main Content */}
