@@ -2,7 +2,6 @@ import { CardResumen } from '@/components/ui/CardResumen';
 import { CardUrgentTasks } from '@/components/ui/CardUrgentTasks';
 import { CardActiveProjects } from '@/components/ui/CardActiveProjects';
 import { CardFinancialSnapshot } from '@/components/ui/CardFinancialSnapshot';
-import { HeaderSearch } from '@/components/features/HeaderSearch';
 
 export const DashboardView = () => {
     // Datos de ejemplo para las tarjetas
@@ -30,12 +29,11 @@ export const DashboardView = () => {
 
     return (
 
-        <div className="flex min-h-screen bg-(--bg-1) text-white font-sans">
+        <div className="flex min-h-[calc(100vh-95px)] bg-(--bg-1) text-white font-sans">
 
             {/* Main Content - Offset by sidebar width (w-60 = 15rem = 240px) */}
             <div className="flex-1 flex flex-col">
                 {/* Header */}
-                <HeaderSearch />
                 <main className="flex-1 p-8 overflow-y-auto">
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-(--text-1)">Welcome back, XXX</h1>

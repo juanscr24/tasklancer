@@ -1,6 +1,5 @@
 'use client'
 
-import { HeaderSearch } from '@/components/features/HeaderSearch'
 import { ServiceCard } from '@/components/ui/ServiceCard'
 import { ServiceCategory } from '@/components/ui/ServiceCategory'
 import { ServiceStats } from '@/components/ui/ServiceStats'
@@ -56,10 +55,9 @@ export const ServicesView = () => {
     ]
 
     return (
-        <div className="flex min-h-screen bg-(--bg-1)">
+        <div className="flex min-h-[calc(100vh-95px) bg-(--bg-1)">
             <div className="flex-1 flex flex-col">
                 {/* Header */}
-                <HeaderSearch />
 
                 <div className="px-8 py-6 bg-(--bg-1)">
                     <h1 className="text-3xl font-bold text-(--text-1)">Servicios para Freelancers</h1>
