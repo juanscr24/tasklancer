@@ -1,10 +1,11 @@
 'use client'
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode } from "react";
+import { motion } from "motion/react"; // Asegúrate de importar desde donde lo tengas instalado
 
 interface InfiniteScrollProps {
     children: ReactNode;
     direction?: 'left' | 'right';
-    speed?: number; // Segundos para completar el ciclo
+    speed?: number; // Duración en segundos de una vuelta completa
 }
 
 export const InfiniteScroll = ({
@@ -12,45 +13,33 @@ export const InfiniteScroll = ({
     direction = 'left',
     speed = 40
 }: InfiniteScrollProps) => {
-    const [contentWidth, setContentWidth] = useState(0);
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (containerRef.current) {
-            // Medimos el ancho de un set de hijos para saber cuánto desplazar
-            setContentWidth(containerRef.current.scrollWidth / 2);
-        }
-    }, [children]);
-
+    
     return (
-        <div className="relative w-full overflow-hidden group">
-            {/* Máscaras de degradado a los lados para suavizar la entrada/salida */}
+        <div className="relative w-full overflow-hidden">
+            {/* Máscaras de degradado (opcionales, pero bonitas) */}
             <div className="absolute left-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-r from-(--bg-1) to-transparent pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-20 z-10 bg-gradient-to-l from-(--bg-1) to-transparent pointer-events-none" />
 
-            <div
-                ref={containerRef}
-                className="flex w-max hover:[animation-play-state:paused]" // Pausa en hover
-                style={{
-                    animation: `scroll-${direction} ${speed}s linear infinite`
+            {/* Contenedor Animado con Motion */}
+            <motion.div
+                className="flex w-max"
+                // Estado inicial
+                initial={{ x: direction === 'left' ? 0 : "-50%" }}
+                // Animación continua
+                animate={{ x: direction === 'left' ? "-50%" : 0 }}
+                // Configuración de la transición (infinita y lineal)
+                transition={{
+                    duration: speed,
+                    ease: "linear",
+                    repeat: Infinity,
+                    repeatType: "loop" // Asegura que no vaya y vuelva, sino que haga loop
                 }}
             >
-                {/* Renderizamos DOS veces el contenido para el loop perfecto */}
+                {/* Renderizamos múltiples veces para asegurar que cubra pantallas grandes */}
                 {children}
                 {children}
-            </div>
-
-            {/* Definimos la animación keyframes localmente para este componente */}
-            <style jsx>{`
-                @keyframes scroll-left {
-                    0% { transform: translateX(0); }
-                    100% { transform: translateX(-50%); } /* Movemos medio ancho */
-                }
-                @keyframes scroll-right {
-                    0% { transform: translateX(-50%); } /* Empezamos desplazados */
-                    100% { transform: translateX(0); }
-                }
-            `}</style>
+                {children} 
+            </motion.div>
         </div>
     );
 };
