@@ -13,7 +13,8 @@ const TestimonialsSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false, amount: 0.8 }}
                     transition={{ duration: 0.9 }}
-                    className="text-3xl md:text-4xl font-bold text-(--text-1) mb-4">
+                    className="text-3xl md:text-5xl font-bold text-(--text-1)"
+                    >
                     Confia en Tasklancer para crecer
                 </motion.h2>
                 <motion.p 
@@ -21,20 +22,19 @@ const TestimonialsSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, amount: 0.8 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-(--text-2)">
+                className="text-(--text-2) max-w-2xl mx-auto text-lg"
+                >
                     Miles de freelancer getionan su negocio con nuestra herramienta.
                 </motion.p>
             </div>
 
             <div className="flex flex-col gap-8">
-                {/* Fila 1: Mueve a la izquierda */}
                 <InfiniteScroll direction="left" speed={100}>
                     {testimonialsTop.map((item) => (
                         <TestimonialCard key={`top-${item.id}`} data={item} />
                     ))}
                 </InfiniteScroll>
 
-                {/* Fila 2: Mueve a la derecha */}
                 <InfiniteScroll direction="right" speed={100}>
                     {testimonialsBottom.map((item) => (
                         <TestimonialCard key={`bottom-${item.id}`} data={item} />
