@@ -70,7 +70,7 @@ export const ProjectSidebar = () => {
             icon: data.icon || null,
             color: data.color,
             status: 'ACTIVE',
-            clientId: null
+            clientId: data.clientId || null
         })
     }
 
@@ -80,7 +80,8 @@ export const ProjectSidebar = () => {
                 name: data.name,
                 description: data.description || null,
                 icon: data.icon || null,
-                color: data.color
+                color: data.color,
+                clientId: data.clientId || null
             })
             setEditingProject(null)
         }
@@ -101,7 +102,8 @@ export const ProjectSidebar = () => {
                     name: project.name,
                     description: project.description || '',
                     icon: project.icon || '📱',
-                    color: project.color
+                    color: project.color,
+                    clientId: project.clientId || null
                 }
             })
         }
@@ -158,6 +160,11 @@ export const ProjectSidebar = () => {
                                     <p className={`text-xs ${isSelected ? 'text-white/80' : 'text-(--text-2)'}`}>
                                         {project.description || 'No description'}
                                     </p>
+                                    {project.client && (
+                                        <p className={`text-xs mt-1 ${isSelected ? 'text-white/70' : 'text-(--text-3)'}`}>
+                                            👤 {project.client.name}
+                                        </p>
+                                    )}
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className={`text-lg font-bold ${isSelected ? 'text-white' : 'text-(--text-2)'}`}>

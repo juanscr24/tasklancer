@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Modal } from '@/components/ui/Modal'
 import { Button } from '@components'
+import { useClients } from '@/hooks'
 
 interface NewProjectModalProps {
     isOpen: boolean
@@ -16,6 +17,7 @@ export interface ProjectFormData {
     description: string
     icon: string
     color: string
+    clientId?: string | null
 }
 
 const PROJECT_ICONS = [
@@ -48,14 +50,42 @@ export const NewProjectModal = ({
     initialData,
     mode = 'create'
 }: NewProjectModalProps) => {
+    // Get userId from localStorage or context (temporary solution)
+    const [userId, setUserId] = useState<string | null>(null)
+    const { clients, fetchClients } = useClients(userId)
+
     const [formData, setFormData] = useState<ProjectFormData>({
         name: '',
         description: '',
         icon: PROJECT_ICONS[0].value,
-        color: PROJECT_COLORS[0]
+        color: PROJECT_COLORS[0],
+        clientId: null
     })
 
     const [errors, setErrors] = useState<Partial<ProjectFormData>>({})
+
+    // Fetch userId on mount
+    useEffect(() => {
+        const fetchUserId = async () => {
+            try {
+                const response = await fetch('/api/users/first')
+                if (response.ok) {
+                    const user = await response.json()
+                    setUserId(user.id)
+                }
+            } catch (error) {
+                console.error('Error fetching user:', error)
+            }
+        }
+        fetchUserId()
+    }, [])
+
+    // Fetch clients when userId is available
+    useEffect(() => {
+        if (userId) {
+            fetchClients()
+        }
+    }, [userId, fetchClients])
 
     // Update form when initialData changes
     useEffect(() => {
@@ -66,7 +96,8 @@ export const NewProjectModal = ({
                 name: '',
                 description: '',
                 icon: PROJECT_ICONS[0].value,
-                color: PROJECT_COLORS[0]
+                color: PROJECT_COLORS[0],
+                clientId: null
             })
         }
         setErrors({})
@@ -92,7 +123,7 @@ export const NewProjectModal = ({
         }
     }
 
-    const handleChange = (field: keyof ProjectFormData, value: string) => {
+    const handleChange = (field: keyof ProjectFormData, value: string | null) => {
         setFormData(prev => ({ ...prev, [field]: value }))
         // Clear error for this field
         if (errors[field]) {
@@ -139,6 +170,26 @@ export const NewProjectModal = ({
                         className="w-full px-4 py-2.5 rounded-lg bg-(--bg-2) border border-(--bg-2) text-(--text-1) focus:outline-none focus:ring-2 focus:ring-(--btn-1) transition-all resize-none"
                         placeholder="Enter project description"
                     />
+                </div>
+
+                {/* Client Selection */}
+                <div>
+                    <label htmlFor="client" className="block text-sm font-medium text-(--text-1) mb-2">
+                        Client (Optional)
+                    </label>
+                    <select
+                        id="client"
+                        value={formData.clientId || ''}
+                        onChange={(e) => handleChange('clientId', e.target.value || null)}
+                        className="w-full px-4 py-2.5 rounded-lg bg-(--bg-2) border border-(--bg-2) text-(--text-1) focus:outline-none focus:ring-2 focus:ring-(--btn-1) transition-all"
+                    >
+                        <option value="">No client</option>
+                        {clients.map((client) => (
+                            <option key={client.id} value={client.id}>
+                                {client.name} {client.company ? `(${client.company})` : ''}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 {/* Icon Selection */}

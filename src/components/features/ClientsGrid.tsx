@@ -6,23 +6,25 @@ import { Client } from '@/types/features/client'
 interface ClientsGridProps {
     clients: Client[]
     onViewProjects?: (clientId: string) => void
-    onMenuClick?: (clientId: string) => void
+    onEdit?: (clientId: string) => void
+    onDelete?: (clientId: string) => void
 }
 
-export const ClientsGrid = ({ clients, onViewProjects, onMenuClick }: ClientsGridProps) => {
+export const ClientsGrid = ({ clients, onViewProjects, onEdit, onDelete }: ClientsGridProps) => {
     return (
         <div className="grid grid-cols-3 gap-6">
             {clients.map((client) => (
                 <ClientCard
                     key={client.id}
                     name={client.name}
-                    role={client.role}
+                    role={client.role || 'No role'}
                     email={client.email}
                     phone={client.phone}
                     avatar={client.avatar}
                     projectsCount={client.projectsCount}
                     onViewProjects={() => onViewProjects?.(client.id)}
-                    onMenuClick={() => onMenuClick?.(client.id)}
+                    onEdit={() => onEdit?.(client.id)}
+                    onDelete={() => onDelete?.(client.id)}
                 />
             ))}
         </div>

@@ -17,6 +17,7 @@ export const ClientsHeader = ({ onAddClient }: ClientsHeaderProps) => {
             <Button
                 className="text-sm py-3 px-4 w-29! text-white"
                 primary
+                onClick={onAddClient}
                 title="new Client"
             >
                 + New Client

@@ -1,7 +1,7 @@
 'use client'
 
-import { MoreVertical } from 'lucide-react'
 import { Button } from '@/components'
+import { DropdownMenu } from '@/components/ui/DropdownMenu'
 
 interface ClientCardProps {
     name: string
@@ -11,7 +11,8 @@ interface ClientCardProps {
     avatar?: string
     projectsCount?: number
     onViewProjects?: () => void
-    onMenuClick?: () => void
+    onEdit?: () => void
+    onDelete?: () => void
 }
 
 export const ClientCard = ({
@@ -22,7 +23,8 @@ export const ClientCard = ({
     avatar,
     projectsCount = 0,
     onViewProjects,
-    onMenuClick
+    onEdit,
+    onDelete
 }: ClientCardProps) => {
     return (
         <div className="bg-(--bg-2) border border-(--border-1) rounded-xl p-6 hover:shadow-xl transition-all duration-300 group">
@@ -37,13 +39,13 @@ export const ClientCard = ({
                     )}
                 </div>
 
-                {/* Menu Button */}
-                <button
-                    onClick={onMenuClick}
-                    className="p-2 rounded-lg hover:bg-(--bg-1) transition-colors text-(--text-2) hover:text-(--text-1)"
-                >
-                    <MoreVertical className="w-5 h-5" />
-                </button>
+                {/* Dropdown Menu */}
+                {onEdit && onDelete && (
+                    <DropdownMenu
+                        onEdit={onEdit}
+                        onDelete={onDelete}
+                    />
+                )}
             </div>
 
             {/* Client Info */}
@@ -68,7 +70,7 @@ export const ClientCard = ({
                 onClick={onViewProjects}
                 className="text-sm py-2 px-4 w-auto"
             >
-                Projects
+                Projects ({projectsCount || 0})
             </Button>
         </div>
     )
