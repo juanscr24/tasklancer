@@ -6,9 +6,7 @@ import { CgLogOut } from "react-icons/cg";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useThemeStore } from "@/stores/themeStore";
-import { Eclipse, Languages } from "lucide-react";
 import { navItems } from "@/constants/sidebar_item";
-import { ButtonMode, LanguageSwitcher } from "@components";
 
 export const Sidebar = () => {
     const { theme } = useThemeStore()
@@ -62,7 +60,7 @@ export const Sidebar = () => {
 
                     <div className={`flex justify-between px-3.5 py-3 items-center rounded-lg transition-all duration-200 ${pathname.includes('/profile')
                         ? 'bg-(--btn-1) text-(--text-1)'
-                        : 'text-(--text-2) bg-(--bg-2) hover:bg-(--btn-1) hover:text-(--text-1)'
+                        : 'text-(--text-1) bg-(--bg-2) hover:bg-(--btn-1) hover:text-(--text-1)'
                         }`}>
                         <Link
                             href="/profile"

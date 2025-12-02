@@ -9,3 +9,10 @@ export type { AuthFormProps } from './form/AuthFormProps'
 
 // Features
 export type { AuthImageProps } from './features/AuthImageProps'
+export type {
+    Project,
+    Task,
+    TaskStatus,
+    TaskPriority,
+    ProjectStatus
+} from './features/project'

@@ -8,6 +8,7 @@ export { SearchBar } from './ui/SearchBar'
 export { ServiceCard } from './ui/ServiceCard'
 export { ServiceCategory } from './ui/ServiceCategory'
 export { ServiceStats } from './ui/ServiceStats'
+export { DropdownMenu } from './ui/DropdownMenu'
 
 // Form
 export { LoginForm } from './form/LoginForm'
@@ -25,4 +26,5 @@ export { ClientCard } from './features/ClientCard'
 export { ClientsHeader } from './features/ClientsHeader'
 export { ClientsGrid } from './features/ClientsGrid'
 export { HeaderSearch } from './features/HeaderSearch'
-
+export { NewProjectModal } from './features/NewProjectModal'
+export { NewTaskModal } from './features/NewTaskModal'

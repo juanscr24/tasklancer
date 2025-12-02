@@ -11,8 +11,8 @@ export const HeaderSearch = ({ className }: { className?: string }) => {
             <div className='flex items-center gap-10'>
                 <LanguageSwitcher />
                 <ButtonMode />
-                <button className="p-2 rounded-full bg-(--bg-1) text-(--text-2) hover:text-white hover:bg-(--bg-2) focus:outline-none">
-                    <Bell className="h-5 w-5" />
+                <button className="hover:scale-103 text-(--text-1) transition-all duration-200 cursor-pointer rounded-md">
+                    <Bell />
                 </button>
             </div>
         </header>

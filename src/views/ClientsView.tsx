@@ -1,66 +1,98 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { ClientsHeader } from '@/components/features/ClientsHeader'
 import { ClientsGrid } from '@/components/features/ClientsGrid'
+import { NewClientModal, ClientFormData } from '@/components/features/NewClientModal'
+import { useClients } from '@/hooks'
 
 export const ClientsView = () => {
-    // Mock data - esto se reemplazará con datos reales del store o API
-    const clients = [
-        {
-            id: '1',
-            name: 'Camilo Parra',
-            role: 'DevOps Engineer',
-            email: 'camilo@gmail.com',
-            phone: '+57 3202020020',
-            projectsCount: 3
-        },
-        {
-            id: '2',
-            name: 'Camilo Parra',
-            role: 'DevOps Engineer',
-            email: 'camilo@gmail.com',
-            phone: '+57 3202020020',
-            projectsCount: 5
-        },
-        {
-            id: '3',
-            name: 'Camilo Parra',
-            role: 'DevOps Engineer',
-            email: 'camilo@gmail.com',
-            phone: '+57 3202020020',
-            projectsCount: 2
-        },
-        {
-            id: '4',
-            name: 'Camilo Parra',
-            role: 'DevOps Engineer',
-            email: 'camilo@gmail.com',
-            phone: '+57 3202020020',
-            projectsCount: 2
-        },
-        {
-            id: '5',
-            name: 'Camilo Parra',
-            role: 'DevOps Engineer',
-            email: 'camilo@gmail.com',
-            phone: '+57 3202020020',
-            projectsCount: 2
+    const [userId, setUserId] = useState<string | null>(null)
+    const { clients, fetchClients, createClient, updateClient, deleteClient } = useClients(userId)
+    const [showNewClientModal, setShowNewClientModal] = useState(false)
+    const [editingClient, setEditingClient] = useState<{ id: string; data: ClientFormData } | null>(null)
+
+    // Fetch userId on mount
+    useEffect(() => {
+        const fetchUserId = async () => {
+            try {
+                const response = await fetch('/api/users/first')
+                if (response.ok) {
+                    const user = await response.json()
+                    setUserId(user.id)
+                }
+            } catch (error) {
+                console.error('Error fetching user:', error)
+            }
         }
-    ]
+        fetchUserId()
+    }, [])
+
+    // Fetch clients when userId is available
+    useEffect(() => {
+        if (userId) {
+            fetchClients()
+        }
+    }, [userId, fetchClients])
 
     const handleAddClient = () => {
-        console.log('Add new client')
-        // Aquí se abrirá un modal o se navegará a un formulario
+        setShowNewClientModal(true)
+    }
+
+    const handleCreateClient = async (data: ClientFormData) => {
+        await createClient({
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            role: data.role || null,
+            company: data.company || null,
+            address: data.address || null,
+            notes: data.notes || null
+        })
+    }
+
+    const handleEditClient = async (data: ClientFormData) => {
+        if (editingClient) {
+            await updateClient(editingClient.id, {
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                role: data.role || null,
+                company: data.company || null,
+                address: data.address || null,
+                notes: data.notes || null
+            })
+            setEditingClient(null)
+        }
+    }
+
+    const handleDeleteClient = async (clientId: string) => {
+        if (confirm('Are you sure you want to delete this client? This action cannot be undone.')) {
+            await deleteClient(clientId)
+        }
+    }
+
+    const openEditModal = (clientId: string) => {
+        const client = clients.find(c => c.id === clientId)
+        if (client) {
+            setEditingClient({
+                id: clientId,
+                data: {
+                    name: client.name,
+                    email: client.email,
+                    phone: client.phone,
+                    role: client.role || '',
+                    company: client.company || '',
+                    address: client.address || '',
+                    notes: client.notes || ''
+                }
+            })
+        }
     }
 
     const handleViewProjects = (clientId: string) => {
         console.log('View projects for client:', clientId)
-        // Aquí se navegará a la vista de proyectos del cliente
-    }
-
-    const handleMenuClick = (clientId: string) => {
-        console.log('Menu clicked for client:', clientId)
-        // Aquí se mostrará un menú contextual (editar, eliminar, etc.)
+        // TODO: Navigate to projects view filtered by client
     }
 
     return (
@@ -71,13 +103,42 @@ export const ClientsView = () => {
 
                 {/* Main Content */}
                 <main className="flex-1 px-8 overflow-y-auto custom-scrollbar">
-                    <ClientsGrid
-                        clients={clients}
-                        onViewProjects={handleViewProjects}
-                        onMenuClick={handleMenuClick}
-                    />
+                    {clients.length === 0 ? (
+                        <div className="flex items-center justify-center h-full">
+                            <div className="text-center">
+                                <p className="text-(--text-2) text-lg mb-4">No clients yet</p>
+                                <p className="text-(--text-3) text-sm">Create your first client to get started</p>
+                            </div>
+                        </div>
+                    ) : (
+                        <ClientsGrid
+                            clients={clients}
+                            onViewProjects={handleViewProjects}
+                            onEdit={openEditModal}
+                            onDelete={handleDeleteClient}
+                        />
+                    )}
                 </main>
             </div>
+
+            {/* New Client Modal */}
+            <NewClientModal
+                isOpen={showNewClientModal}
+                onClose={() => setShowNewClientModal(false)}
+                onSubmit={handleCreateClient}
+                mode="create"
+            />
+
+            {/* Edit Client Modal */}
+            {editingClient && (
+                <NewClientModal
+                    isOpen={true}
+                    onClose={() => setEditingClient(null)}
+                    onSubmit={handleEditClient}
+                    initialData={editingClient.data}
+                    mode="edit"
+                />
+            )}
         </div>
     )
 }
