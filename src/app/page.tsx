@@ -1,3 +1,4 @@
+import Footer from "@/components/features/FooterHero";
 import Navbar from "@/components/features/Navbar";
 import ServicesSection from "@/components/features/ServicesSection";
 import TestimonialsSection from "@/components/features/TestimonialSection";
@@ -21,6 +22,9 @@ export default function Home() {
                 </div>
                 <div className="relative z-10 pb-20">
                     <TestimonialsSection />
+                </div>
+                <div id="contact" className="scroll-mt-24">
+                    <Footer />
                 </div>
             </main>
         </>

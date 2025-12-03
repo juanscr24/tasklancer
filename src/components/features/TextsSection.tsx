@@ -2,11 +2,12 @@
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { FaFileInvoice } from "react-icons/fa";
 import { RiDashboardHorizontalFill } from "react-icons/ri";
-import { Link } from "@/i18n/routing";
 import { HeroImages } from "./HeroImages";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 const TextsSection = () => {
+    const t = useTranslations('hero');
     return (
         <div className="max-w-8/10 mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-12 lg:py-20">
@@ -19,7 +20,7 @@ const TextsSection = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.9 }}
                             className="font-extrabold text-xl sm:text-5xl lg:text-6xl text-(--text-1) leading-[1.1]">
-                            All your freelance work <br />
+                            {t('title')}<br />
                             <span className="text-(--btn-1)">in one place.</span>
                         </motion.h2>
                         <motion.p
@@ -27,7 +28,7 @@ const TextsSection = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1.3 }}
                             className="text-lg sm:text-xl text-(--text-2) max-w-lg leading-relaxed">
-                            Organize projects, tasks, hours, and invoices without spreadsheets or a thousand tabs open.
+                            {t('parrafo')}
                         </motion.p>
                     </div>
 
@@ -41,7 +42,7 @@ const TextsSection = () => {
                             <div className="p-3 rounded-lg bg-(--bg-2) shrink-0 transition-colors group-hover:bg-(--btn-1)/10">
                                 <FaMoneyBillWave className="w-5 h-5 text-(--text-1) group-hover:text-(--btn-1)" />
                             </div>
-                            <h4 className="font-medium text-lg">Create and organize projects in minutes.</h4>
+                            <h4 className="font-medium text-lg">{t('span')}</h4>
                         </motion.div>
 
                         <motion.div
@@ -52,7 +53,7 @@ const TextsSection = () => {
                             <div className="p-3 rounded-lg bg-(--bg-2) shrink-0 transition-colors group-hover:bg-(--btn-1)/10">
                                 <RiDashboardHorizontalFill className="w-5 h-5 text-(--text-1) group-hover:text-(--btn-1)" />
                             </div>
-                            <h4 className="font-medium text-lg">Organize your day with simple Kanban boards.</h4>
+                            <h4 className="font-medium text-lg">{t('span-2')}</h4>
                         </motion.div>
 
                         <motion.div
@@ -63,7 +64,7 @@ const TextsSection = () => {
                             <div className="p-3 rounded-lg bg-(--bg-2) shrink-0 transition-colors group-hover:bg-(--btn-1)/10">
                                 <FaFileInvoice className="w-5 h-5 text-(--text-1) group-hover:text-(--btn-1)" />
                             </div>
-                            <h4 className="font-medium text-lg">Generate clear invoices based on your task and hours.</h4>
+                            <h4 className="font-medium text-lg">{t('span-3')}</h4>
                         </motion.div>
                     </div>
                 </div>

@@ -22,7 +22,6 @@ const Navbar = () => {
 
     useEffect(() => setMounted(true), []);
 
-        // Función para subir al inicio suavemente
     const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         if (window.location.pathname === '/' || window.location.pathname === '/en' || window.location.pathname === '/es') {
             e.preventDefault();
@@ -33,7 +32,19 @@ const Navbar = () => {
         }
     };
 
-    // Función para manejar el scroll suave al ID #services
+    const scrollToContact = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        if (window.location.pathname === '/' || window.location.pathname === '/en' || window.location.pathname === '/es') {
+            e.preventDefault();
+            const element = document.getElementById('contact');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                window.location.href = '/#contact';
+            }
+        }
+    };
+
+
     const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         if (window.location.pathname === '/' || window.location.pathname === '/en' || window.location.pathname === '/es') {
             e.preventDefault();
@@ -115,7 +126,8 @@ const Navbar = () => {
                             <div className="h-6 w-px bg-(--text-2)/20"></div>
 
                             <Link
-                                href="/contact"
+                                href="/#contact"
+                                onClick={scrollToContact}
                                 className="text-sm font-medium text-(--text-2) hover:text-(--text-1) transition-colors">
                                 Contact
                             </Link>
