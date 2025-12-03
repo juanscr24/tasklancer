@@ -21,7 +21,7 @@ const TextsSection = () => {
                             transition={{ duration: 0.9 }}
                             className="font-extrabold text-xl sm:text-5xl lg:text-6xl text-(--text-1) leading-[1.1]">
                             {t('title')}<br />
-                            <span className="text-(--btn-1)">in one place.</span>
+                            <span className="text-(--btn-1)">{t('title-2')}</span>
                         </motion.h2>
                         <motion.p
                             initial={{ opacity: 0, x: -50 }}

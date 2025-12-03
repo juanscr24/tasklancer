@@ -4,8 +4,10 @@ import { motion } from "motion/react";
 import { servicesData } from "@/constants/services";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
+import { useTranslations } from "next-intl";
 
 export default function ServicesSection() {
+    const t = useTranslations('hero');
     return (
         <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-(--bg-1)">
             <div className="max-w-7xl mx-auto">
@@ -18,7 +20,7 @@ export default function ServicesSection() {
                         transition={{ duration: 0.6 }}
                         className="text-3xl md:text-5xl font-bold text-(--text-1)"
                     >
-                        Herramientas para <span className="text-(--btn-1)">Freelancers Pro</span>
+                        {t('title-services')}<span className="text-(--btn-1)">{t('title-services-blue')}</span>
                     </motion.h2>
                     <motion.p 
                         initial={{ opacity: 0, y: 20 }}
@@ -27,7 +29,7 @@ export default function ServicesSection() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-(--text-2) max-w-2xl mx-auto text-lg"
                     >
-                        Todo lo que necesitas para gestionar tu negocio, desde calculadoras hasta facturación.
+                        {t('parrafo-services')}
                     </motion.p>
                 </div>
 
