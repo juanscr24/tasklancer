@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { X, Plus, DollarSign, Clock, FileText } from 'lucide-react'
+import { X, Plus, DollarSign, Clock, FileText, Download } from 'lucide-react'
 import { Project } from '@/types/features/project'
 import { useRequirements } from '@/hooks/useRequirements'
 import { RequirementItem } from './RequirementItem'
+import { generateQuotationPDF } from '@/lib/pdf-generator'
 
 interface ProjectDetailsModalProps {
     project: Project
@@ -20,6 +21,8 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
     const [priority, setPriority] = useState<string>(project.priority || 'MEDIUM')
     const [newRequirement, setNewRequirement] = useState('')
     const [isSaving, setIsSaving] = useState(false)
+    const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
+    const [pdfError, setPdfError] = useState<string | undefined>(undefined)
 
     // Calculate total price
     const totalPrice = useMemo(() => {
@@ -63,6 +66,27 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
             handleAddRequirement()
+        }
+    }
+
+    const handleDownloadPDF = async () => {
+        setIsGeneratingPDF(true)
+        setPdfError(undefined)
+        try {
+            await generateQuotationPDF({
+                project: {
+                    ...project,
+                    hourlyRate,
+                    estimatedHours,
+                    priority: priority as any
+                } as any,
+                requirements
+            })
+        } catch (error) {
+            console.error('Error generating PDF:', error)
+            setPdfError('Error al generar el PDF. Por favor, intenta de nuevo.')
+        } finally {
+            setIsGeneratingPDF(false)
         }
     }
 
@@ -205,20 +229,37 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
                 </div>
 
                 {/* Footer */}
-                <div className="p-6 border-t border-(--bg-1) flex justify-end gap-3">
-                    <button
-                        onClick={onClose}
-                        className="px-6 py-2 border border-(--text-3) text-(--text-1) rounded-lg hover:bg-(--bg-1) transition-colors"
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        onClick={handleSaveQuotation}
-                        disabled={isSaving}
-                        className="px-6 py-2 bg-(--btn-1) text-white rounded-lg hover:bg-(--btn-2) transition-colors disabled:opacity-50"
-                    >
-                        {isSaving ? 'Guardando...' : 'Guardar Cotización'}
-                    </button>
+                <div className="p-6 border-t border-(--bg-1)">
+                    {pdfError && (
+                        <div className="mb-4 p-3 text-sm text-red-500 bg-red-100 border border-red-200 rounded-md">
+                            {pdfError}
+                        </div>
+                    )}
+                    <div className="flex justify-between items-center">
+                        <button
+                            onClick={handleDownloadPDF}
+                            disabled={isGeneratingPDF}
+                            className="px-6 py-2 border border-(--btn-1) text-(--btn-1) rounded-lg hover:bg-(--btn-1) hover:text-white transition-colors disabled:opacity-50 flex items-center gap-2"
+                        >
+                            <Download size={18} />
+                            {isGeneratingPDF ? 'Generando PDF...' : 'Descargar PDF'}
+                        </button>
+                        <div className="flex gap-3">
+                            <button
+                                onClick={onClose}
+                                className="px-6 py-2 border border-(--text-3) text-(--text-1) rounded-lg hover:bg-(--bg-1) transition-colors"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleSaveQuotation}
+                                disabled={isSaving}
+                                className="px-6 py-2 bg-(--btn-1) text-white rounded-lg hover:bg-(--btn-2) transition-colors disabled:opacity-50"
+                            >
+                                {isSaving ? 'Guardando...' : 'Guardar Cotización'}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
