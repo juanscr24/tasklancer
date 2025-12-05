@@ -56,8 +56,8 @@ export const clientService = {
     /**
      * Update an existing client
      */
-    async updateClient(clientId: string, data: UpdateClientInput): Promise<Client> {
-        const response = await fetch(`${API_BASE_URL}/${clientId}`, {
+    async updateClient(clientId: string, userId: string, data: UpdateClientInput): Promise<Client> {
+        const response = await fetch(`${API_BASE_URL}/${clientId}?userId=${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -75,8 +75,8 @@ export const clientService = {
     /**
      * Delete a client
      */
-    async deleteClient(clientId: string): Promise<void> {
-        const response = await fetch(`${API_BASE_URL}/${clientId}`, {
+    async deleteClient(clientId: string, userId: string): Promise<void> {
+        const response = await fetch(`${API_BASE_URL}/${clientId}?userId=${userId}`, {
             method: 'DELETE',
         })
 

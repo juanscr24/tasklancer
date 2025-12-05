@@ -1,6 +1,7 @@
 export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE'
 export type TaskPriority = 'LOW' | 'MEDIUM' | 'HIGH'
 export type ProjectStatus = 'ACTIVE' | 'COMPLETED' | 'ON_HOLD' | 'CANCELLED'
+export type ProjectPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
 
 export interface Task {
     id: string
@@ -29,6 +30,13 @@ export interface Project {
     status: ProjectStatus
     userId: string
     clientId: string | null
+
+    // Quotation fields
+    hourlyRate?: number | null
+    estimatedHours?: number | null
+    totalPrice?: number | null
+    priority?: ProjectPriority
+
     createdAt: string
     updatedAt: string
     tasks?: Task[]
@@ -37,4 +45,3 @@ export interface Project {
         name: string
     }
 }
-

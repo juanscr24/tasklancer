@@ -113,14 +113,21 @@ model Project {
   color       String        @default("#3B82F6")
   status      ProjectStatus @default(ACTIVE)
 
+  // Quotation fields
+  hourlyRate     Decimal?        @db.Decimal(10, 2)
+  estimatedHours Decimal?        @db.Decimal(10, 2)
+  totalPrice     Decimal?        @db.Decimal(10, 2)
+  priority       ProjectPriority @default(MEDIUM)
+
   // Relations
-  userId      String
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  clientId    String?
-  client      Client?     @relation(fields: [clientId], references: [id], onDelete: SetNull)
-  tasks       Task[]
-  timeEntries TimeEntry[]
-  invoices    Invoice[]
+  userId       String
+  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clientId     String?
+  client       Client?              @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  tasks        Task[]
+  timeEntries  TimeEntry[]
+  invoices     Invoice[]
+  requirements ProjectRequirement[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -135,6 +142,13 @@ enum ProjectStatus {
   COMPLETED
   ON_HOLD
   CANCELLED
+}
+
+enum ProjectPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
 }
 
 // ==================== TASKS ====================
@@ -169,6 +183,25 @@ enum TaskPriority {
   LOW
   MEDIUM
   HIGH
+}
+
+// ==================== PROJECT REQUIREMENTS ====================
+
+model ProjectRequirement {
+  id          String  @id @default(cuid())
+  description String  @db.Text
+  completed   Boolean @default(false)
+  order       Int     @default(0)
+
+  // Relations
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+  @@map("project_requirements")
 }
 
 // ==================== TIME TRACKING ====================

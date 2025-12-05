@@ -112,6 +112,34 @@ export async function handleUpdateClient(
         // Validate client ID
         const validatedId = clientIdSchema.parse({ id: params.id })
 
+        // Get userId from query params
+        const userId = request.nextUrl.searchParams.get('userId')
+        if (!userId) {
+            return NextResponse.json(
+                { error: 'userId is required' },
+                { status: 400 }
+            )
+        }
+
+        // Check if client exists and belongs to user
+        const existingClient = await prisma.client.findUnique({
+            where: { id: validatedId.id },
+        })
+
+        if (!existingClient) {
+            return NextResponse.json(
+                { error: 'Client not found' },
+                { status: 404 }
+            )
+        }
+
+        if (existingClient.userId !== userId) {
+            return NextResponse.json(
+                { error: 'Forbidden: You do not have permission to update this client' },
+                { status: 403 }
+            )
+        }
+
         const body = await request.json()
 
         // Validate request body
@@ -161,6 +189,34 @@ export async function handleDeleteClient(
     try {
         // Validate client ID
         const validatedId = clientIdSchema.parse({ id: params.id })
+
+        // Get userId from query params
+        const userId = request.nextUrl.searchParams.get('userId')
+        if (!userId) {
+            return NextResponse.json(
+                { error: 'userId is required' },
+                { status: 400 }
+            )
+        }
+
+        // Check if client exists and belongs to user
+        const existingClient = await prisma.client.findUnique({
+            where: { id: validatedId.id },
+        })
+
+        if (!existingClient) {
+            return NextResponse.json(
+                { error: 'Client not found' },
+                { status: 404 }
+            )
+        }
+
+        if (existingClient.userId !== userId) {
+            return NextResponse.json(
+                { error: 'Forbidden: You do not have permission to delete this client' },
+                { status: 403 }
+            )
+        }
 
         await prisma.client.delete({
             where: { id: validatedId.id },

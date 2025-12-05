@@ -45,7 +45,9 @@ export const RegisterForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+            className="flex flex-col items-center gap-8 w-1/2"
+            onSubmit={handleSubmit(onSubmit)}>
             <Input
                 id="name"
                 type="text"

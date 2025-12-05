@@ -61,9 +61,10 @@ export async function createProject(data: CreateProjectInput): Promise<Project> 
  */
 export async function updateProject(
     projectId: string,
+    userId: string,
     data: UpdateProjectInput
 ): Promise<Project> {
-    const response = await fetch(`${API_BASE_URL}/${projectId}`, {
+    const response = await fetch(`${API_BASE_URL}/${projectId}?userId=${userId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -82,8 +83,8 @@ export async function updateProject(
 /**
  * Delete a project
  */
-export async function deleteProject(projectId: string): Promise<{ message: string }> {
-    const response = await fetch(`${API_BASE_URL}/${projectId}`, {
+export async function deleteProject(projectId: string, userId: string): Promise<{ message: string }> {
+    const response = await fetch(`${API_BASE_URL}/${projectId}?userId=${userId}`, {
         method: 'DELETE',
     })
 

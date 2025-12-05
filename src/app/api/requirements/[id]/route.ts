@@ -1,11 +1,11 @@
-import { handleUpdateClient, handleDeleteClient } from '../client.controller'
+import { handleUpdateRequirement, handleDeleteRequirement } from '../requirement.controller'
 
 export async function PUT(
     request: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     const resolvedParams = await params
-    return handleUpdateClient(request as any, resolvedParams)
+    return handleUpdateRequirement(request as any, resolvedParams)
 }
 
 export async function DELETE(
@@ -13,5 +13,5 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     const resolvedParams = await params
-    return handleDeleteClient(request as any, resolvedParams)
+    return handleDeleteRequirement(request as any, resolvedParams)
 }

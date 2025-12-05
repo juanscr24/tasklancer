@@ -6,6 +6,7 @@ import Credentials from "next-auth/providers/credentials";
 import { loginSchema } from "@/validations";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
+import type { UserRole } from "./next-auth";
 
 // Create the NextAuth instance with the Prisma adapter and custom configuration
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -85,13 +86,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     jwt({ token, user }) {
       if (user) { // User is available during sign-in
+        token.id = user.id
         token.email = user.email
+        token.role = user.role
       }
       return token
     },
     session({ session, token }) {
       if (session.user) {
+        session.user.id = token.id as string
         session.user.email = token.email as string
+        session.user.role = token.role as UserRole
       }
       return session;
     },

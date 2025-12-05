@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { Modal } from '@/components/ui/Modal'
 import { Button } from '@components'
 import { useClients } from '@/hooks'
@@ -50,7 +51,7 @@ export const NewProjectModal = ({
     initialData,
     mode = 'create'
 }: NewProjectModalProps) => {
-    // Get userId from localStorage or context (temporary solution)
+    const { data: session } = useSession()
     const [userId, setUserId] = useState<string | null>(null)
     const { clients, fetchClients } = useClients(userId)
 
@@ -64,21 +65,12 @@ export const NewProjectModal = ({
 
     const [errors, setErrors] = useState<Partial<ProjectFormData>>({})
 
-    // Fetch userId on mount
+    // Get userId from session
     useEffect(() => {
-        const fetchUserId = async () => {
-            try {
-                const response = await fetch('/api/users/first')
-                if (response.ok) {
-                    const user = await response.json()
-                    setUserId(user.id)
-                }
-            } catch (error) {
-                console.error('Error fetching user:', error)
-            }
+        if (session?.user?.id) {
+            setUserId(session.user.id)
         }
-        fetchUserId()
-    }, [])
+    }, [session])
 
     // Fetch clients when userId is available
     useEffect(() => {
