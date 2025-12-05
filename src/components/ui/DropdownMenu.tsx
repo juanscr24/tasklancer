@@ -3,11 +3,13 @@ import { useState, useRef, useEffect } from 'react'
 import { MoreVertical, Edit, Trash2 } from 'lucide-react'
 
 interface DropdownMenuProps {
-    onEdit: () => void
-    onDelete: () => void
+    onEdit?: () => void
+    onDelete?: () => void
+    onClick?: () => void
+    onInvoice?: boolean;
 }
 
-export const DropdownMenu = ({ onEdit, onDelete }: DropdownMenuProps) => {
+export const DropdownMenu = ({ onEdit, onDelete, onClick, onInvoice }: DropdownMenuProps) => {
     const [isOpen, setIsOpen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -29,12 +31,17 @@ export const DropdownMenu = ({ onEdit, onDelete }: DropdownMenuProps) => {
     }, [isOpen])
 
     const handleEdit = () => {
-        onEdit()
+        onEdit?.()
         setIsOpen(false)
     }
 
     const handleDelete = () => {
-        onDelete()
+        onDelete?.()
+        setIsOpen(false)
+    }
+
+    const handleClick = () => {
+        onClick?.()
         setIsOpen(false)
     }
 
@@ -63,6 +70,16 @@ export const DropdownMenu = ({ onEdit, onDelete }: DropdownMenuProps) => {
                         <Edit className="w-4 h-4" />
                         <span>Edit</span>
                     </button>
+                    {onInvoice && <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            handleClick()
+                        }}
+                        className="w-full px-4 py-2 text-left text-(--text-1) hover:bg-(--bg-2) transition-colors duration-150 flex items-center gap-3"
+                    >
+                        <Edit className="w-4 h-4" />
+                        <span>Factura</span>
+                    </button>}
                     <button
                         onClick={(e) => {
                             e.stopPropagation()

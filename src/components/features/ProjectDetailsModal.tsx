@@ -91,7 +91,7 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
     }
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-(--bg-2)/30 backdrop-blur-xs flex items-center justify-center z-50 p-4">
             <div className="bg-(--bg-2) rounded-xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
                 {/* Header */}
                 <div className="p-6 border-b border-(--bg-1)">
@@ -99,7 +99,7 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
                         <div>
                             <h2 className="text-2xl font-bold text-(--text-1)">{project.name}</h2>
                             {project.client && (
-                                <p className="text-(--text-3) mt-1">Cliente: {project.client.name}</p>
+                                <p className="text-(--text-2) mt-1">Cliente: {project.client.name}</p>
                             )}
                         </div>
                         <button
@@ -123,16 +123,16 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {/* Hourly Rate */}
                             <div>
-                                <label className="block text-sm text-(--text-3) mb-2">
+                                <label className="block text-sm text-(--text-2) mb-2">
                                     Precio por hora
                                 </label>
                                 <div className="relative">
-                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-(--text-3)">$</span>
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-(--text-2)">$</span>
                                     <input
                                         type="number"
                                         value={hourlyRate}
                                         onChange={(e) => setHourlyRate(Number(e.target.value))}
-                                        className="w-full pl-8 pr-4 py-2 bg-(--bg-1) border border-(--text-3) rounded-lg text-(--text-1) focus:outline-none focus:border-(--btn-1)"
+                                        className="w-full pl-8 pr-4 py-2 border-none bg-(--bg-1) rounded-lg text-(--text-1) focus:outline-none focus:border-(--btn-1)"
                                         min="0"
                                         step="0.01"
                                     />
@@ -141,16 +141,16 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
 
                             {/* Estimated Hours */}
                             <div>
-                                <label className="block text-sm text-(--text-3) mb-2">
+                                <label className="block text-sm text-(--text-2) mb-2">
                                     Horas estimadas
                                 </label>
                                 <div className="relative">
-                                    <Clock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-(--text-3)" />
+                                    <Clock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-(--text-2)" />
                                     <input
                                         type="number"
                                         value={estimatedHours}
                                         onChange={(e) => setEstimatedHours(Number(e.target.value))}
-                                        className="w-full pl-10 pr-4 py-2 bg-(--bg-1) border border-(--text-3) rounded-lg text-(--text-1) focus:outline-none focus:border-(--btn-1)"
+                                        className="w-full pl-10 pr-4 py-2 border-none bg-(--bg-1) rounded-lg text-(--text-1) focus:outline-none focus:border-(--btn-1)"
                                         min="0"
                                         step="0.5"
                                     />
@@ -159,11 +159,11 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
 
                             {/* Total Price */}
                             <div>
-                                <label className="block text-sm text-(--text-3) mb-2">
+                                <label className="block text-sm text-(--text-2) mb-2">
                                     Total
                                 </label>
-                                <div className="px-4 py-2 bg-(--btn-1) rounded-lg">
-                                    <p className="text-2xl font-bold text-white">
+                                <div className="px-4 py-2 bg-(--btn-2) rounded-lg">
+                                    <p className="font-bold text-(--text-1)">
                                         ${totalPrice.toFixed(2)}
                                     </p>
                                 </div>
@@ -172,13 +172,13 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
 
                         {/* Priority */}
                         <div>
-                            <label className="block text-sm text-(--text-3) mb-2">
+                            <label className="block text-sm text-(--text-2) mb-2">
                                 Prioridad
                             </label>
                             <select
                                 value={priority}
                                 onChange={(e) => setPriority(e.target.value)}
-                                className="w-full px-4 py-2 bg-(--bg-1) border border-(--text-3) rounded-lg text-(--text-1) focus:outline-none focus:border-(--btn-1)"
+                                className="w-full px-2 py-2 border-none bg-(--bg-1) rounded-lg text-(--text-1) focus:outline-none focus:border-(--btn-1)"
                             >
                                 <option value="LOW">Baja</option>
                                 <option value="MEDIUM">Media</option>
@@ -215,7 +215,7 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
                                 onChange={(e) => setNewRequirement(e.target.value)}
                                 onKeyDown={handleKeyDown}
                                 placeholder="Agregar nuevo requerimiento..."
-                                className="flex-1 px-4 py-2 bg-(--bg-1) border border-(--text-3) rounded-lg text-(--text-1) placeholder:text-(--text-3) focus:outline-none focus:border-(--btn-1)"
+                                className="flex-1 px-4 py-2 border-none bg-(--bg-1) rounded-lg text-(--text-1) placeholder:text-(--text-3) focus:outline-none focus:border-(--btn-1)"
                             />
                             <button
                                 onClick={handleAddRequirement}
@@ -239,7 +239,7 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
                         <button
                             onClick={handleDownloadPDF}
                             disabled={isGeneratingPDF}
-                            className="px-6 py-2 border border-(--btn-1) text-(--btn-1) rounded-lg hover:bg-(--btn-1) hover:text-white transition-colors disabled:opacity-50 flex items-center gap-2"
+                            className="px-6 py-2 border border-(--btn-1) text-(--text-1) rounded-lg hover:bg-(--btn-1) hover:text-white transition-colors disabled:opacity-50 flex items-center gap-2"
                         >
                             <Download size={18} />
                             {isGeneratingPDF ? 'Generando PDF...' : 'Descargar PDF'}
