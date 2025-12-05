@@ -12,12 +12,17 @@ export function useClients(userId: string | null) {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
+    const clearClients = useCallback(() => {
+        setClients([])
+        setError(null)
+    }, [])
+
     /**
      * Fetch all clients for the user
      */
     const fetchClients = useCallback(async () => {
         if (!userId) {
-            setError('User ID is required')
+            setError('User ID not set')
             return
         }
 
@@ -91,11 +96,16 @@ export function useClients(userId: string | null) {
      * Update an existing client
      */
     const updateClient = useCallback(async (clientId: string, data: UpdateClientInput) => {
+        if (!userId) {
+            setError('User ID is required')
+            return null
+        }
+
         setIsLoading(true)
         setError(null)
 
         try {
-            const updatedClient = await clientService.updateClient(clientId, data)
+            const updatedClient = await clientService.updateClient(clientId, userId, data)
             setClients((prev) =>
                 prev.map((client) => (client.id === clientId ? updatedClient : client))
             )
@@ -108,17 +118,22 @@ export function useClients(userId: string | null) {
         } finally {
             setIsLoading(false)
         }
-    }, [])
+    }, [userId])
 
     /**
      * Delete a client
      */
     const deleteClient = useCallback(async (clientId: string) => {
+        if (!userId) {
+            setError('User ID is required')
+            return false
+        }
+
         setIsLoading(true)
         setError(null)
 
         try {
-            await clientService.deleteClient(clientId)
+            await clientService.deleteClient(clientId, userId)
             setClients((prev) => prev.filter((client) => client.id !== clientId))
             return true
         } catch (err) {
@@ -129,12 +144,13 @@ export function useClients(userId: string | null) {
         } finally {
             setIsLoading(false)
         }
-    }, [])
+    }, [userId])
 
     return {
         clients,
         isLoading,
         error,
+        clearClients,
         fetchClients,
         fetchClientById,
         createClient,

@@ -5,11 +5,11 @@ import { handleUpdateProject, handleDeleteProject } from '../project.controller'
  * PUT /api/projects/[id] - Update a project
  */
 export async function PUT(
-    request: NextRequest,
+    request: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    const { id } = await params
-    return handleUpdateProject(request, { id })
+    const resolvedParams = await params
+    return handleUpdateProject(request as any, resolvedParams)
 }
 
 /**

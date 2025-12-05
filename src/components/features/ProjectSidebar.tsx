@@ -1,9 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { useProjectStore } from '@/stores/projectStore'
 import { Button, SearchBar } from '@components'
 import { NewProjectModal, ProjectFormData } from './NewProjectModal'
+import { ProjectDetailsModal } from './ProjectDetailsModal'
 import { DropdownMenu } from '@/components/ui/DropdownMenu'
+import { Project } from '@/types/features/project'
 
 export const ProjectSidebar = () => {
     const {
@@ -17,31 +20,26 @@ export const ProjectSidebar = () => {
         updateProject,
         deleteProject,
         setUserId,
+        clearData,
         userId
     } = useProjectStore()
 
+    const { data: session } = useSession()
     const [searchQuery, setSearchQuery] = useState('')
     const [showNewProjectModal, setShowNewProjectModal] = useState(false)
     const [editingProject, setEditingProject] = useState<{ id: string; data: ProjectFormData } | null>(null)
+    const [detailsProject, setDetailsProject] = useState<Project | null>(null)
 
-    // Initialize userId and fetch data
+    // Initialize userId from session and handle user changes
     useEffect(() => {
-        const initializeUser = async () => {
-            if (!userId) {
-                try {
-                    // Fetch the first user from the database for testing
-                    const response = await fetch('/api/users/first')
-                    if (response.ok) {
-                        const user = await response.json()
-                        setUserId(user.id)
-                    }
-                } catch (error) {
-                    console.error('Error fetching user:', error)
-                }
+        if (session?.user?.id) {
+            // If userId changed (different user logged in), clear old data and update userId
+            if (userId !== session.user.id) {
+                clearData() // Limpiar datos del usuario anterior
+                setUserId(session.user.id)
             }
         }
-        initializeUser()
-    }, [userId, setUserId])
+    }, [session, userId, setUserId, clearData])
 
     useEffect(() => {
         if (userId) {
@@ -109,6 +107,19 @@ export const ProjectSidebar = () => {
         }
     }
 
+    const handleUpdateProject = async (projectId: string, updates: Partial<Project>) => {
+        await updateProject(projectId, updates)
+        // Refresh projects to get updated data
+        await fetchProjects()
+        // Close details modal if open
+        if (detailsProject?.id === projectId) {
+            const updatedProject = projects.find(p => p.id === projectId)
+            if (updatedProject) {
+                setDetailsProject(updatedProject)
+            }
+        }
+    }
+
     return (
         <div className="w-80 flex flex-col bg-(--bg-2) py-7 px-4 border-r border-(--bg-2)">
             {/* Header */}
@@ -141,10 +152,13 @@ export const ProjectSidebar = () => {
                     return (
                         <div
                             key={project.id}
-                            onClick={() => setSelectedProject(project.id)}
-                            className={`p-4 rounded-lg cursor-pointer transition-all duration-200 relative ${isSelected
-                                ? 'bg-(--btn-1) text-white'
-                                : 'bg-(--bg-1) hover:bg-(--bg-2) text-(--text-1)'
+                            onClick={() => {
+                                setSelectedProject(project.id)
+                                setDetailsProject(project)
+                            }}
+                            className={`p-4 rounded-lg cursor-pointer transition-all ${isSelected
+                                ? 'bg-(--btn-1) text-white shadow-lg'
+                                : 'bg-(--bg-2) hover:bg-(--bg-1)'
                                 }`}
                         >
                             {/* Project Header */}
@@ -225,6 +239,15 @@ export const ProjectSidebar = () => {
                     onSubmit={handleEditProject}
                     initialData={editingProject.data}
                     mode="edit"
+                />
+            )}
+
+            {/* Project Details Modal */}
+            {detailsProject && (
+                <ProjectDetailsModal
+                    project={detailsProject}
+                    onClose={() => setDetailsProject(null)}
+                    onUpdate={handleUpdateProject}
                 />
             )}
         </div>

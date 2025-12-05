@@ -13,6 +13,7 @@ interface ProjectState {
 
     // Actions
     setUserId: (userId: string) => void
+    clearData: () => void
     fetchProjects: () => Promise<void>
     fetchTasks: (projectId?: string) => Promise<void>
     addProject: (project: Omit<Project, 'id' | 'createdAt' | 'updatedAt' | 'userId'>) => Promise<void>
@@ -37,6 +38,15 @@ export const useProjectStore = create<ProjectState>()(
 
             setUserId: (userId: string) => {
                 set({ userId })
+            },
+
+            clearData: () => {
+                set({
+                    projects: [],
+                    tasks: [],
+                    selectedProjectId: null,
+                    error: null
+                })
             },
 
             fetchProjects: async () => {
@@ -97,9 +107,23 @@ export const useProjectStore = create<ProjectState>()(
             },
 
             updateProject: async (projectId, updates) => {
+                const { userId } = get()
+                if (!userId) {
+                    set({ error: 'User ID not set' })
+                    return
+                }
+
                 set({ isLoading: true, error: null })
                 try {
-                    const updatedProject = await projectService.updateProject(projectId, updates)
+                    // Filter out null values for quotation fields
+                    const cleanUpdates = {
+                        ...updates,
+                        hourlyRate: updates.hourlyRate === null ? undefined : updates.hourlyRate,
+                        estimatedHours: updates.estimatedHours === null ? undefined : updates.estimatedHours,
+                        totalPrice: updates.totalPrice === null ? undefined : updates.totalPrice
+                    } as any
+
+                    const updatedProject = await projectService.updateProject(projectId, userId, cleanUpdates)
                     set((state) => ({
                         projects: state.projects.map((p) =>
                             p.id === projectId ? updatedProject : p
@@ -114,9 +138,15 @@ export const useProjectStore = create<ProjectState>()(
             },
 
             deleteProject: async (projectId) => {
+                const { userId } = get()
+                if (!userId) {
+                    set({ error: 'User ID not set' })
+                    return
+                }
+
                 set({ isLoading: true, error: null })
                 try {
-                    await projectService.deleteProject(projectId)
+                    await projectService.deleteProject(projectId, userId)
                     set((state) => ({
                         projects: state.projects.filter((p) => p.id !== projectId),
                         selectedProjectId: state.selectedProjectId === projectId ? null : state.selectedProjectId,

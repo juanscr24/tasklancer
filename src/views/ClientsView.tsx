@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { useSession } from 'next-auth/react'
 import { ClientsHeader } from '@/components/features/ClientsHeader'
 import { ClientsGrid } from '@/components/features/ClientsGrid'
 import { NewClientModal, ClientFormData } from '@/components/features/NewClientModal'
@@ -9,26 +10,22 @@ import { useClients } from '@/hooks'
 
 export const ClientsView = () => {
 
+    const { data: session } = useSession()
     const [userId, setUserId] = useState<string | null>(null)
-    const { clients, fetchClients, createClient, updateClient, deleteClient } = useClients(userId)
+    const { clients: allClients, fetchClients, createClient, updateClient, deleteClient, clearClients } = useClients(userId)
     const [showNewClientModal, setShowNewClientModal] = useState(false)
     const [editingClient, setEditingClient] = useState<{ id: string; data: ClientFormData } | null>(null)
 
-    // Fetch userId on mount
+    // Get userId from session and clear data if user changed
     useEffect(() => {
-        const fetchUserId = async () => {
-            try {
-                const response = await fetch('/api/users/first')
-                if (response.ok) {
-                    const user = await response.json()
-                    setUserId(user.id)
-                }
-            } catch (error) {
-                console.error('Error fetching user:', error)
+        if (session?.user?.id) {
+            // Si el usuario cambió, limpiar datos antiguos inmediatamente
+            if (userId && userId !== session.user.id) {
+                clearClients() // Limpiar clientes del usuario anterior
             }
+            setUserId(session.user.id)
         }
-        fetchUserId()
-    }, [])
+    }, [session, userId, clearClients])
 
     // Fetch clients when userId is available
     useEffect(() => {
@@ -36,6 +33,14 @@ export const ClientsView = () => {
             fetchClients()
         }
     }, [userId, fetchClients])
+
+    // Only show clients if userId matches session
+    const clients = useMemo(() => {
+        if (!session?.user?.id || !userId || session.user.id !== userId) {
+            return [] // No mostrar datos si el userId no coincide
+        }
+        return allClients
+    }, [allClients, session, userId])
 
     const handleAddClient = () => {
         setShowNewClientModal(true)

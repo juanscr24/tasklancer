@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 // Enums
 export const ProjectStatusEnum = z.enum(['ACTIVE', 'COMPLETED', 'ON_HOLD', 'CANCELLED'])
+export const ProjectPriorityEnum = z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT'])
 
 // Create Project Schema
 export const createProjectSchema = z.object({
@@ -21,7 +22,10 @@ export const updateProjectSchema = z.object({
     icon: z.string().nullable().optional(),
     color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid color format').optional(),
     status: ProjectStatusEnum.optional(),
-    clientId: z.string().nullable().optional()
+    clientId: z.string().nullable().optional(),
+    hourlyRate: z.number().positive('Hourly rate must be positive').optional(),
+    estimatedHours: z.number().positive('Estimated hours must be positive').optional(),
+    priority: ProjectPriorityEnum.optional()
 })
 
 // Project ID Schema

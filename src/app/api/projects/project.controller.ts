@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
+import { Prisma } from '@prisma/client'
 import {
     createProjectSchema,
     updateProjectSchema,
@@ -106,10 +107,46 @@ export async function handleUpdateProject(
         // Validate project ID
         const validatedId = projectIdSchema.parse({ id: params.id })
 
+        // Get userId from query params
+        const userId = request.nextUrl.searchParams.get('userId')
+        if (!userId) {
+            return NextResponse.json(
+                { error: 'userId is required' },
+                { status: 400 }
+            )
+        }
+
+        // Check if project exists and belongs to user
+        const existingProject = await prisma.project.findUnique({
+            where: { id: validatedId.id },
+        })
+
+        if (!existingProject) {
+            return NextResponse.json(
+                { error: 'Project not found' },
+                { status: 404 }
+            )
+        }
+
+        if (existingProject.userId !== userId) {
+            return NextResponse.json(
+                { error: 'Forbidden: You do not have permission to update this project' },
+                { status: 403 }
+            )
+        }
+
         const body = await request.json()
 
         // Validate request body
         const validatedData = updateProjectSchema.parse(body)
+
+        // Calculate totalPrice if hourlyRate or estimatedHours are provided
+        let totalPrice: Prisma.Decimal | null = existingProject.totalPrice
+        if (validatedData.hourlyRate !== undefined || validatedData.estimatedHours !== undefined) {
+            const rate = validatedData.hourlyRate ?? (existingProject.hourlyRate ? Number(existingProject.hourlyRate) : 0)
+            const hours = validatedData.estimatedHours ?? (existingProject.estimatedHours ? Number(existingProject.estimatedHours) : 0)
+            totalPrice = new Prisma.Decimal(rate * hours)
+        }
 
         const project = await prisma.project.update({
             where: { id: validatedId.id },
@@ -120,9 +157,12 @@ export async function handleUpdateProject(
                 ...(validatedData.color && { color: validatedData.color }),
                 ...(validatedData.status && { status: validatedData.status }),
                 ...(validatedData.clientId !== undefined && { clientId: validatedData.clientId }),
+                ...(validatedData.hourlyRate !== undefined && { hourlyRate: validatedData.hourlyRate }),
+                ...(validatedData.estimatedHours !== undefined && { estimatedHours: validatedData.estimatedHours }),
+                ...(validatedData.priority && { priority: validatedData.priority }),
+                ...(totalPrice !== null && { totalPrice }),
             },
             include: {
-                tasks: true,
                 client: true,
             },
         })
@@ -154,6 +194,34 @@ export async function handleDeleteProject(
     try {
         // Validate project ID
         const validatedId = projectIdSchema.parse({ id: params.id })
+
+        // Get userId from query params
+        const userId = request.nextUrl.searchParams.get('userId')
+        if (!userId) {
+            return NextResponse.json(
+                { error: 'userId is required' },
+                { status: 400 }
+            )
+        }
+
+        // Check if project exists and belongs to user
+        const existingProject = await prisma.project.findUnique({
+            where: { id: validatedId.id },
+        })
+
+        if (!existingProject) {
+            return NextResponse.json(
+                { error: 'Project not found' },
+                { status: 404 }
+            )
+        }
+
+        if (existingProject.userId !== userId) {
+            return NextResponse.json(
+                { error: 'Forbidden: You do not have permission to delete this project' },
+                { status: 403 }
+            )
+        }
 
         await prisma.project.delete({
             where: { id: validatedId.id },

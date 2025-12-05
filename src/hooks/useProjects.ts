@@ -91,11 +91,16 @@ export function useProjects(userId: string | null) {
      * Update an existing project
      */
     const updateProject = useCallback(async (projectId: string, data: UpdateProjectInput) => {
+        if (!userId) {
+            setError('User ID is required')
+            return null
+        }
+
         setIsLoading(true)
         setError(null)
 
         try {
-            const updatedProject = await projectService.updateProject(projectId, data)
+            const updatedProject = await projectService.updateProject(projectId, userId, data)
             setProjects((prev) =>
                 prev.map((project) => (project.id === projectId ? updatedProject : project))
             )
@@ -108,17 +113,22 @@ export function useProjects(userId: string | null) {
         } finally {
             setIsLoading(false)
         }
-    }, [])
+    }, [userId])
 
     /**
      * Delete a project
      */
     const deleteProject = useCallback(async (projectId: string) => {
+        if (!userId) {
+            setError('User ID is required')
+            return false
+        }
+
         setIsLoading(true)
         setError(null)
 
         try {
-            await projectService.deleteProject(projectId)
+            await projectService.deleteProject(projectId, userId)
             setProjects((prev) => prev.filter((project) => project.id !== projectId))
             return true
         } catch (err) {
@@ -129,7 +139,7 @@ export function useProjects(userId: string | null) {
         } finally {
             setIsLoading(false)
         }
-    }, [])
+    }, [userId])
 
     return {
         projects,
