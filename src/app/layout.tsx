@@ -15,9 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Tasklancer",
-    description: "Tasklancer es una plataforma de gestión de tareas que te permite crear, asignar y gestionar tus tareas de manera eficiente.",
-};
+    title: {
+        template: "%s",
+        default: "TaskLancer",
+    },
+    description: "Tasklancer es una plataforma de gestión de tareas que te permite crear, asignar y gestionar tus tareas de manera eficiente."
+}
 
 export default function RootLayout({
     children,

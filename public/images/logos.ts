@@ -1,0 +1,5 @@
+export const img_logo_dark = "https://res.cloudinary.com/drxfmsqbo/image/upload/v1764174809/20251126_091149_erqs9s.png"
+export const img_logo_light = "https://res.cloudinary.com/drxfmsqbo/image/upload/v1764174809/20251126_090657_wocasd.png"
+export const img_logo_icon = "https://res.cloudinary.com/drxfmsqbo/image/upload/v1764175196/20251126_091202_mb8qk9.png"
+export const img_logo_icon_text = "https://res.cloudinary.com/drxfmsqbo/image/upload/v1764174809/20251126_091233_cvaqhd.png"
+export const img_logo_icon_text_dark = "https://res.cloudinary.com/drxfmsqbo/image/upload/v1764174809/20251126_091218_c3gb51.png"

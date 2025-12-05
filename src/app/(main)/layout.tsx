@@ -7,6 +7,11 @@ interface Props {
     children: ReactNode
 }
 
+import { Metadata } from "next";
+export const metadata: Metadata = {
+    title: 'Dashboard',
+}
+
 export default async function MainLayout({ children }: Props) {
     const session = await auth()
 

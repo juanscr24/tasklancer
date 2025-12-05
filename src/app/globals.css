@@ -73,3 +73,7 @@
 body {
     font-family: 'Supreme', sans-serif;
 }
+
+html {
+    scroll-behavior: smooth;
+}
