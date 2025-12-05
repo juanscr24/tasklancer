@@ -34,12 +34,12 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
         <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
             {/* Backdrop with blur effect */}
             <div
-                className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+                className="absolute inset-0 bg-(--bg-2)/30 backdrop-blur-xs"
                 onClick={onClose}
             />
 
             {/* Modal Content */}
-            <div className="relative bg-(--bg-1) rounded-2xl shadow-2xl w-full max-w-md animate-in zoom-in-95 duration-200 border border-(--bg-2)">
+            <div className="relative bg-(--bg-1) rounded-2xl w-full max-w-md animate-in zoom-in-95 duration-200 border border-(--bg-2)">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-(--bg-2)">
                     <h2 className="text-2xl font-semibold text-(--text-1)">{title}</h2>

@@ -6,6 +6,7 @@ import { ClientsHeader } from '@/components/features/ClientsHeader'
 import { ClientsGrid } from '@/components/features/ClientsGrid'
 import { NewClientModal, ClientFormData } from '@/components/features/NewClientModal'
 import { useClients } from '@/hooks'
+import { Button } from '@/components'
 
 
 export const ClientsView = () => {
@@ -111,10 +112,19 @@ export const ClientsView = () => {
                 {/* Main Content */}
                 <main className="flex-1 px-8 overflow-y-auto custom-scrollbar">
                     {clients.length === 0 ? (
-                        <div className="flex items-center justify-center h-full">
-                            <div className="text-center">
-                                <p className="text-(--text-2) text-lg mb-4">No clients yet</p>
-                                <p className="text-(--text-3) text-sm">Create your first client to get started</p>
+                        <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+                            <div className="text-center max-w-md">
+                                <h2 className="text-2xl font-bold text-(--text-1) mb-2">No Clients Yet</h2>
+                                <p className="text-(--text-2) mb-6">
+                                    You don't have clients yet, create your client to get started
+                                </p>
+                                <Button
+                                    className="text-sm py-3 px-6 text-white"
+                                    primary
+                                    onClick={() => setShowNewClientModal(true)}
+                                >
+                                    + Create Your First Client
+                                </Button>
                             </div>
                         </div>
                     ) : (

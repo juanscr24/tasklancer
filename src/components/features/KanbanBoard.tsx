@@ -96,7 +96,6 @@ export const KanbanBoard = () => {
                 {/* Empty State */}
                 <div className="flex items-center justify-center h-[calc(100vh-200px)]">
                     <div className="text-center max-w-md">
-                        <div className="text-6xl mb-4">✨</div>
                         <h2 className="text-2xl font-bold text-(--text-1) mb-2">No Tasks Yet</h2>
                         <p className="text-(--text-2) mb-6">
                             You don't have tasks yet, create your task to get started
