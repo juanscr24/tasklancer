@@ -1,0 +1,21 @@
+{
+    "title": "Tablero de Tareas",
+    "newTask": "Nueva Tarea",
+    "createFirstTask": "Crea Tu Primera Tarea",
+    "emptyState": {
+        "noProject": {
+            "title": "Elige Tu Proyecto",
+            "description": "Selecciona un proyecto desde la barra lateral para ver y gestionar sus tareas"
+        },
+        "noTasks": {
+            "title": "Sin Tareas Aún",
+            "description": "Aún no tienes tareas, crea tu tarea para comenzar"
+        }
+    },
+    "columns": {
+        "todo": "Por Hacer",
+        "inProgress": "En Progreso",
+        "done": "Completado"
+    },
+    "noTasksYet": "Sin tareas aún"
+}

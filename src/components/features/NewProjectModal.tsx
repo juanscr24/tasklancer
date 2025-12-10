@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 import { Modal } from '@/components/ui/Modal'
 import { Button } from '@components'
 import { useClients } from '@/hooks'
@@ -31,6 +32,7 @@ export const NewProjectModal = ({
     initialData,
     mode = 'create'
 }: NewProjectModalProps) => {
+    const t = useTranslations('projectModal')
     const { data: session } = useSession()
     const [userId, setUserId] = useState<string | null>(null)
     const { clients, fetchClients } = useClients(userId)
@@ -109,7 +111,7 @@ export const NewProjectModal = ({
         <Modal
             isOpen={isOpen}
             onClose={onClose}
-            title={mode === 'create' ? 'New Project' : 'Edit Project'}
+            title={mode === 'create' ? t('create.title') : t('edit.title')}
         >
             <form onSubmit={handleSubmit} className="space-y-4">
                 <ProjectFormFields
@@ -127,14 +129,14 @@ export const NewProjectModal = ({
                         onClick={onClose}
                         className="flex-1 py-2.5 bg-(--bg-2) text-(--text-1) hover:bg-(--bg-2)/80"
                     >
-                        Cancel
+                        {t('cancel')}
                     </Button>
                     <Button
                         type="submit"
                         primary
                         className="flex-1 py-2.5 text-white"
                     >
-                        {mode === 'create' ? 'Create Project' : 'Save Changes'}
+                        {mode === 'create' ? t('create.submit') : t('edit.submit')}
                     </Button>
                 </div>
             </form>

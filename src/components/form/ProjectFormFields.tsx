@@ -1,4 +1,5 @@
 'use client'
+import { useTranslations } from 'next-intl'
 import { PROJECT_ICONS, PROJECT_COLORS } from '@/constants/project'
 import { ProjectFormData } from '../features/NewProjectModal'
 import { StatusSelect } from '../ui/StatusSelect'
@@ -24,12 +25,13 @@ export const ProjectFormFields = ({
     mode,
     onChange
 }: ProjectFormFieldsProps) => {
+    const t = useTranslations('projectModal')
     return (
         <>
             {/* Project Name */}
             <div>
                 <label htmlFor="name" className="block text-sm font-medium text-(--text-1) mb-2">
-                    Project Name *
+                    {t('fields.name.label')} *
                 </label>
                 <input
                     id="name"
@@ -38,17 +40,17 @@ export const ProjectFormFields = ({
                     onChange={(e) => onChange('name', e.target.value)}
                     className={`w-full px-4 py-2.5 rounded-lg bg-(--bg-2) border ${errors.name ? 'border-red-500' : 'border-(--bg-2)'
                         } text-(--text-1) focus:outline-none focus:ring-2 focus:ring-(--btn-1) transition-all`}
-                    placeholder="Enter project name"
+                    placeholder={t('fields.name.placeholder')}
                 />
                 {errors.name && (
-                    <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                    <p className="mt-1 text-sm text-red-500">{t('fields.name.required')}</p>
                 )}
             </div>
 
             {/* Project Description */}
             <div>
                 <label htmlFor="description" className="block text-sm font-medium text-(--text-1) mb-2">
-                    Description
+                    {t('fields.description.label')}
                 </label>
                 <textarea
                     id="description"
@@ -56,7 +58,7 @@ export const ProjectFormFields = ({
                     onChange={(e) => onChange('description', e.target.value)}
                     rows={2}
                     className="w-full px-4 py-2.5 rounded-lg bg-(--bg-2) border border-(--bg-2) text-(--text-1) focus:outline-none focus:ring-2 focus:ring-(--btn-1) transition-all resize-none"
-                    placeholder="Enter project description"
+                    placeholder={t('fields.description.placeholder')}
                 />
             </div>
 
@@ -65,7 +67,7 @@ export const ProjectFormFields = ({
                 {/* Client Selection */}
                 <div>
                     <label htmlFor="client" className="block text-sm font-medium text-(--text-1) mb-2">
-                        Client (Optional)
+                        {t('fields.client.label')}
                     </label>
                     <select
                         id="client"
@@ -73,7 +75,7 @@ export const ProjectFormFields = ({
                         onChange={(e) => onChange('clientId', e.target.value || null)}
                         className="w-full px-4 py-2.5 rounded-lg bg-(--bg-2) border border-(--bg-2) text-(--text-1) focus:outline-none focus:ring-2 focus:ring-(--btn-1) transition-all"
                     >
-                        <option value="">No client</option>
+                        <option value="">{t('fields.client.placeholder')}</option>
                         {clients.map((client) => (
                             <option key={client.id} value={client.id}>
                                 {client.name} {client.company ? `(${client.company})` : ''}
@@ -86,7 +88,7 @@ export const ProjectFormFields = ({
                 {mode === 'edit' && (
                     <div>
                         <label htmlFor="status" className="block text-sm font-medium text-(--text-1) mb-2">
-                            Project Status
+                            {t('fields.status.label')}
                         </label>
                         <StatusSelect
                             value={formData.status || 'ACTIVE'}
@@ -101,7 +103,7 @@ export const ProjectFormFields = ({
                 {/* Icon Selection */}
                 <div>
                     <label className="block text-sm font-medium text-(--text-1) mb-2">
-                        Icon
+                        {t('fields.icon.label')}
                     </label>
                     <div className="grid grid-cols-4 gap-2">
                         {PROJECT_ICONS.map((icon) => (
@@ -124,7 +126,7 @@ export const ProjectFormFields = ({
                 {/* Color Selection */}
                 <div>
                     <label className="block text-sm font-medium text-(--text-1) mb-2">
-                        Color
+                        {t('fields.color.label')}
                     </label>
                     <div className="grid grid-cols-4 gap-4">
                         {PROJECT_COLORS.map((color) => (

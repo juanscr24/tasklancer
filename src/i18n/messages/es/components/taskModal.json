@@ -1,0 +1,33 @@
+{
+    "create": {
+        "title": "Nueva Tarea",
+        "button": "Crear Tarea"
+    },
+    "edit": {
+        "title": "Editar Tarea",
+        "button": "Guardar Cambios"
+    },
+    "fields": {
+        "title": {
+            "label": "Título de la Tarea",
+            "placeholder": "Ingresa el título de la tarea",
+            "required": "El título es requerido"
+        },
+        "description": {
+            "label": "Descripción",
+            "placeholder": "Ingresa la descripción de la tarea"
+        },
+        "priority": {
+            "label": "Prioridad",
+            "options": {
+                "low": "Baja",
+                "medium": "Media",
+                "high": "Alta"
+            }
+        },
+        "dueDate": {
+            "label": "Fecha de Vencimiento"
+        }
+    },
+    "cancel": "Cancelar"
+}

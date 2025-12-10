@@ -1,0 +1,44 @@
+{
+    "create": {
+        "title": "Nuevo Proyecto",
+        "button": "Crear Proyecto",
+        "submit": "Crear Proyecto"
+    },
+    "edit": {
+        "title": "Editar Proyecto",
+        "button": "Guardar Cambios",
+        "submit": "Guardar Cambios"
+    },
+    "fields": {
+        "name": {
+            "label": "Nombre del Proyecto",
+            "placeholder": "Ingresa el nombre del proyecto",
+            "required": "El nombre del proyecto es requerido"
+        },
+        "description": {
+            "label": "Descripción",
+            "placeholder": "Ingresa la descripción del proyecto"
+        },
+        "client": {
+            "label": "Cliente (Opcional)",
+            "placeholder": "Sin cliente",
+            "noClient": "Sin cliente"
+        },
+        "status": {
+            "label": "Estado del Proyecto",
+            "options": {
+                "active": "Activo",
+                "completed": "Completado",
+                "onHold": "En Espera",
+                "cancelled": "Cancelado"
+            }
+        },
+        "icon": {
+            "label": "Icono"
+        },
+        "color": {
+            "label": "Color"
+        }
+    },
+    "cancel": "Cancelar"
+}
