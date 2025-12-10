@@ -1,5 +1,10 @@
-// components/CardUrgentTasks.jsx
-export function CardUrgentTasks({ tasks }) {
+import { DashboardData } from '@/types/dashboard';
+
+interface CardUrgentTasksProps {
+  tasks: DashboardData['urgentTasks'];
+}
+
+export function CardUrgentTasks({ tasks }: CardUrgentTasksProps) {
   return (
     <div className="bg-(--bg-2) rounded-xl shadow-lg p-6 text-(--text-1) h-full border border-(--border-1)">
       <h4 className="text-lg font-semibold mb-6">Urgent Tasks</h4>
@@ -16,7 +21,7 @@ export function CardUrgentTasks({ tasks }) {
                 }`}></div>
               <div>
                 <div className="font-medium text-(--text-1) text-sm md:text-base">{task.title}</div>
-                <div className="text-xs text-(--text-2) mt-1">Project Titan/Client B</div>
+                <div className="text-xs text-(--text-2) mt-1">{task.project}/{task.client}</div>
               </div>
             </div>
 

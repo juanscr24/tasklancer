@@ -1,47 +1,71 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Button } from '@/components';
+import { Bell, Search } from 'lucide-react';
 import { CardResumen } from '@/components/ui/CardResumen';
 import { CardUrgentTasks } from '@/components/ui/CardUrgentTasks';
 import { CardActiveProjects } from '@/components/ui/CardActiveProjects';
 import { CardFinancialSnapshot } from '@/components/ui/CardFinancialSnapshot';
-import { Button } from '@/components';
-
-
+import { DashboardData } from '@/types/dashboard';
 
 export const DashboardView = () => {
+    const [data, setData] = useState<DashboardData | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [selectedClient, setSelectedClient] = useState<string | null>(null);
 
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            setLoading(true);
+            try {
+                const query = selectedClient ? `?clientId=${selectedClient}` : '';
+                const response = await fetch(`/api/dashboard${query}`);
+                if (response.ok) {
+                    const jsonData = await response.json();
+                    setData(jsonData);
+                }
+            } catch (error) {
+                console.error('Failed to fetch dashboard data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    // Datos de ejemplo para las tarjetas
+        fetchDashboardData();
+    }, [selectedClient]);
+
+    if (loading && !data) { // Only show full loading spinner on initial load
+        return (
+            <div className="flex min-h-[calc(100vh-95px)] bg-(--bg-1) text-white font-sans items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
+
+    if (!data) {
+        return (
+            <div className="flex min-h-[calc(100vh-95px)] bg-(--bg-1) text-white font-sans items-center justify-center">
+                <p>Failed to load dashboard data.</p>
+            </div>
+        );
+    }
+
     const resumenData = [
-        { title: "Today's Tasks", value: 5 },
-        { title: "Planned Hours", value: 5 },
-        { title: "Active Projects", value: 3 },
-        { title: "Active Projects", value: 3 },
+        { title: "Today's Tasks", value: data.summary.tasksDueToday },
+        { title: "Planned Hours", value: data.summary.plannedHours },
+        { title: "Active Projects", value: data.summary.activeProjects },
+        { title: "Total Clients", value: data.summary.totalClients },
     ];
-    const tasks = [
-        { title: 'Finalize Marketing Campaign Mockups', status: 'overdue', statusText: 'Overdue', dueDate: 'Yesterday' },
-        { title: 'Finalize Marketing Campaign Mockups', status: 'due-today', statusText: 'Due Today', dueDate: '11:59 PM' },
-        { title: 'Finalize Marketing Campaign Mockups', status: 'due-tomorrow', statusText: 'Due Tomorrow', dueDate: 'Yesterday' },
-    ];
-    const invoices = [
-        { code: 'INV-2023-098', amount: '4,200', statusText: 'Due in 3 days' },
-        { code: 'INV-2023-098', amount: '4,200', statusText: 'Overdue 5 days' },
-        { code: 'INV-2023-098', amount: '4,200', statusText: 'Due in 15 days' },
-    ];
-    const projects = [
-        { name: 'Project Phoenix', progress: 85, client: 'Client A' },
-        { name: 'Project Phoenix', progress: 5, client: 'Client A' },
-        { name: 'Project Phoenix', progress: 15, client: 'Client A' },
-    ];
+
 
     return (
-
-        <div className="flex min-h-[calc(100vh-95px)] bg-(--bg-1) text-white font-sans">
-
+        <div className="flex min-h-screen bg-(--bg-1) text-white font-sans">
             {/* Main Content - Offset by sidebar width (w-60 = 15rem = 240px) */}
             <div className="flex-1 flex flex-col">
-                {/* Header */}
+
                 <main className="flex-1 p-8 overflow-y-auto">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-(--text-1)">Welcome back, XXX</h1>
+                        <h1 className="text-3xl font-bold text-(--text-1)">Dashboard Overview</h1>
                         <p className="text-(--text-2) mt-2 text-sm">Here's your command center for today</p>
                     </div>
 
@@ -58,29 +82,44 @@ export const DashboardView = () => {
                         </div>
 
                         {/* Filter Section */}
-                        <div className="flex items-center gap-4">
-                            <Button className='w-fit! text-xs py-3! text-white' primary children="Filter by Client" />
-                            <Button className='w-fit! text-xs py-3! font-medium' secondary children="Client A" />
-                            <Button className='w-fit! text-xs py-3! font-medium' secondary children="Client B" />
+                        <div className="flex items-center gap-4 overflow-x-auto pb-2">
+                            <button
+                                onClick={() => setSelectedClient(null)}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors ${!selectedClient ? 'bg-[#135BEC] text-white shadow-lg shadow-blue-500/30' : 'bg-[#1A2336] text-(--text-2) hover:bg-gray-700'}`}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                                </svg>
+                                All Clients
+                            </button>
+                            {data.clients?.map((client) => (
+                                <button
+                                    key={client.id}
+                                    onClick={() => setSelectedClient(client.id)}
+                                    className={`px-4 py-2 rounded-lg text-xs font-medium transition duration-300 ease-in-out ${selectedClient === client.id ? 'bg-[#135BEC] text-white shadow-lg shadow-blue-500/30' : 'bg-[#1A2336] text-(--text-2) hover:bg-gray-700'}`}
+                                >
+                                    {client.name}
+                                </button>
+                            ))}
                         </div>
 
                         {/* 2. FILA MEDIA: Urgent Tasks (66%) + Financial (33%) */}
                         <div className="flex flex-col lg:flex-row gap-6 w-full">
                             {/* Urgent Tasks - Flex 2 */}
                             <div className="lg:flex-2 flex flex-col">
-                                <CardUrgentTasks tasks={tasks} />
+                                <CardUrgentTasks tasks={data.urgentTasks} />
                             </div>
 
                             {/* Financial Snapshot - Flex 1 */}
                             <div className="lg:flex-1 flex flex-col">
-                                <CardFinancialSnapshot total="8,450.00" invoices={invoices} />
+                                <CardFinancialSnapshot total={data.totalOutstanding} invoices={data.recentInvoices} />
                             </div>
                         </div>
 
                         {/* 3. FILA INFERIOR: Proyectos (Ancho completo) */}
                         <div className="w-full flex flex-col">
                             <h4 className="text-lg font-semibold mb-4 text-(--text-1)">Active Projects</h4>
-                            <CardActiveProjects projects={projects} />
+                            <CardActiveProjects projects={data.activeProjects} />
                         </div>
 
                     </div>
