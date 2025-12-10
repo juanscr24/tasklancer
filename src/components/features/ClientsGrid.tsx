@@ -12,7 +12,7 @@ interface ClientsGridProps {
 
 export const ClientsGrid = ({ clients, onViewProjects, onEdit, onDelete }: ClientsGridProps) => {
     return (
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {clients.map((client) => (
                 <ClientCard
                     key={client.id}
@@ -21,6 +21,8 @@ export const ClientsGrid = ({ clients, onViewProjects, onEdit, onDelete }: Clien
                     email={client.email}
                     phone={client.phone}
                     avatar={client.avatar}
+                    company={client.company}
+                    notes={client.notes}
                     projectsCount={client.projectsCount}
                     onViewProjects={() => onViewProjects?.(client.id)}
                     onEdit={() => onEdit?.(client.id)}
