@@ -52,6 +52,7 @@ export const NewTaskModal = ({
         priority?: string
         dueDate?: string
         projectId?: string
+        status?: string
     }>({})
 
     // Update form when initialData or projectId changes
