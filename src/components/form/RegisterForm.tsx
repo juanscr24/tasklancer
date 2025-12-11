@@ -46,7 +46,7 @@ export const RegisterForm = () => {
 
     return (
         <form
-            className="flex flex-col items-center gap-8 w-1/2"
+            className="flex flex-col items-center gap-6 md:gap-8 w-8/10 max-w-md"
             onSubmit={handleSubmit(onSubmit)}>
             <Input
                 id="name"
@@ -82,7 +82,7 @@ export const RegisterForm = () => {
             />
 
             {error && (
-                <div className="p-3 text-sm text-red-500 bg-red-100 border border-red-200 rounded-md">
+                <div className="p-3 text-sm text-red-500 bg-red-100 border border-red-200 rounded-md w-full">
                     {error}
                 </div>
             )}
