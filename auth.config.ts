@@ -11,4 +11,5 @@ export default {
       // The actual logic will be in auth.ts
     }),
   ],
+  trustHost: true,
 } satisfies NextAuthConfig;

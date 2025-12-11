@@ -79,10 +79,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
 
-
-
   // Use JWT strategy for session management
   session: { strategy: "jwt" },
+  
   callbacks: {
     jwt({ token, user }) {
       if (user) { // User is available during sign-in
@@ -101,5 +100,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
+
+  // Add these configurations to prevent the ENVIRONMENT_FALLBACK error
+  trustHost: true,
 
 }) 
