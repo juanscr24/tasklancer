@@ -1,0 +1,61 @@
+{
+    "title": "Servicios para Freelancers",
+    "subtitle": "Herramientas profesionales para gestionar tu negocio freelance",
+    "stats": {
+        "activeProjects": "Proyectos Activos",
+        "clients": "Clientes",
+        "completedTasks": "Tareas Completadas",
+        "totalRevenue": "Ingresos Totales",
+        "total": "total",
+        "active": "activos",
+        "paidInvoices": "facturas pagadas"
+    },
+    "categories": {
+        "projectManagement": {
+            "title": "Gestión de Proyectos",
+            "description": "Organiza y administra tus proyectos freelance"
+        },
+        "clientManagement": {
+            "title": "Gestión de Clientes",
+            "description": "Organiza y mantén relaciones con tus clientes"
+        },
+        "timeManagement": {
+            "title": "Gestión de Tiempo",
+            "description": "Registra y optimiza tu tiempo de trabajo"
+        },
+        "invoicing": {
+            "title": "Facturación",
+            "description": "Gestiona tus facturas y pagos de manera profesional"
+        }
+    },
+    "services": {
+        "projectsAndTasks": {
+            "title": "Proyectos y Tareas",
+            "description": "Crea proyectos, asigna tareas y organiza tu trabajo con tableros Kanban"
+        },
+        "projectQuotes": {
+            "title": "Cotizaciones de Proyectos",
+            "description": "Genera cotizaciones profesionales con estimación de horas y precios"
+        },
+        "clientRequirements": {
+            "title": "Requerimientos del Cliente",
+            "description": "Documenta y gestiona los requerimientos de cada proyecto"
+        },
+        "clientDatabase": {
+            "title": "Base de Datos de Clientes",
+            "description": "Almacena información de contacto, empresa, proyectos asociados y notas importantes"
+        },
+        "timeTracker": {
+            "title": "Time Tracker",
+            "description": "Registra las horas trabajadas por proyecto con inicio/pausa automático"
+        },
+        "invoiceGenerator": {
+            "title": "Generador de Facturas",
+            "description": "Crea facturas profesionales con detalles del cliente y conceptos personalizados"
+        }
+    },
+    "badges": {
+        "implemented": "Implementado",
+        "comingSoon": "Próximamente"
+    }
+}

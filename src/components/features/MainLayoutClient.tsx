@@ -20,7 +20,7 @@ export const MainLayoutClient = ({ children }: MainLayoutClientProps) => {
             {/* CONTENIDO */}
             <main className="ml-60 max-md:ml-0 flex-1 flex flex-col overflow-hidden">
                 <HeaderSearch onMenuClick={() => setIsSidebarOpen(true)} />
-                <div className="flex-1 overflow-hidden">
+                <div className="flex-1 overflow-y-auto custom-scrollbar">
                     {children}
                 </div>
             </main>
