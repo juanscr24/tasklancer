@@ -5,9 +5,13 @@ export const metadata: Metadata = {
     title: 'Inicio de seción',
 };
 
+import { Suspense } from "react";
+
 const Auth = () => {
     return (
-        <AuthView />
+        <Suspense fallback={<div>Loading...</div>}>
+            <AuthView />
+        </Suspense>
     )
 }
 
