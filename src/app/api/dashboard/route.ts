@@ -72,7 +72,11 @@ export async function GET(request: Request) {
             },
         });
 
-        // 2. Urgent Tasks (Top 5, not done, sorted by due date)
+        // 2. Urgent Tasks (Top 5, not done, sorted by due date, due within 7 days)
+        const sevenDaysFromNow = new Date();
+        sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
+        sevenDaysFromNow.setHours(23, 59, 59, 999);
+
         const urgentTasks = await db.task.findMany({
             where: {
                 project: {
@@ -80,7 +84,10 @@ export async function GET(request: Request) {
                     ...(clientId ? { clientId } : {}),
                 },
                 status: { not: 'DONE' },
-                dueDate: { not: null },
+                dueDate: {
+                    not: null,
+                    lte: sevenDaysFromNow
+                },
             },
             orderBy: {
                 dueDate: 'asc',
@@ -232,11 +239,12 @@ export async function GET(request: Request) {
             };
         });
 
-        // 5. Quotations (Projects with totalPrice > 0)
+        // 5. Quotations (Active and Completed Projects with totalPrice > 0)
         const quotations = await db.project.findMany({
             where: {
                 userId,
                 totalPrice: { gt: 0 },
+                status: { in: ['ACTIVE', 'COMPLETED'] },
                 ...(clientId ? { clientId } : {}),
             },
             orderBy: {

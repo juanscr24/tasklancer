@@ -15,9 +15,10 @@ export const ClientsView = () => {
 
     const { data: session } = useSession()
     const [userId, setUserId] = useState<string | null>(null)
-    const { clients: allClients, fetchClients, createClient, updateClient, deleteClient, clearClients } = useClients(userId)
+    const { clients: allClients, fetchClients, createClient, updateClient, deleteClient, clearClients, isLoading } = useClients(userId)
     const [showNewClientModal, setShowNewClientModal] = useState(false)
     const [editingClient, setEditingClient] = useState<{ id: string; data: ClientFormData } | null>(null)
+    const [initialLoading, setInitialLoading] = useState(true)
 
     // Get userId from session and clear data if user changed
     useEffect(() => {
@@ -37,6 +38,13 @@ export const ClientsView = () => {
         }
     }, [userId, fetchClients])
 
+    // Handle initial loading state
+    useEffect(() => {
+        if (session !== undefined) {
+            setInitialLoading(false)
+        }
+    }, [session])
+
     // Only show clients if userId matches session
     const clients = useMemo(() => {
         if (!session?.user?.id || !userId || session.user.id !== userId) {
@@ -44,6 +52,16 @@ export const ClientsView = () => {
         }
         return allClients
     }, [allClients, session, userId])
+
+    // Show loading spinner on initial load
+    if (initialLoading) {
+        return (
+            <div className="flex min-h-[calc(100vh-95px)] bg-(--bg-1) text-white font-sans items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
+
 
     const handleAddClient = () => {
         setShowNewClientModal(true)

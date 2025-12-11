@@ -15,7 +15,8 @@
         "dueLater": "Due Later",
         "overdue": "Overdue",
         "dueToday": "Due Today",
-        "dueTomorrow": "Due Tomorrow"
+        "dueTomorrow": "Due Tomorrow",
+        "noTasks": "No urgent tasks at the moment"
     },
     "financial": {
         "title": "Financial",

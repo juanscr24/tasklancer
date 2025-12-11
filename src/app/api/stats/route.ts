@@ -20,7 +20,8 @@ export async function GET(request: NextRequest) {
             totalClients,
             totalTasks,
             completedTasks,
-            invoices
+            invoices,
+            projects
         ] = await Promise.all([
             // Total projects
             db.project.count({
@@ -54,15 +55,23 @@ export async function GET(request: NextRequest) {
                     status: true,
                     total: true
                 }
+            }),
+            // All projects with totalPrice (quotes)
+            db.project.findMany({
+                where: { userId },
+                select: {
+                    totalPrice: true
+                }
             })
         ])
 
         // Calculate invoice stats
         const totalInvoices = invoices.length
         const paidInvoices = invoices.filter(inv => inv.status === 'PAID').length
-        const totalRevenue = invoices
-            .filter(inv => inv.status === 'PAID')
-            .reduce((sum, inv) => sum + Number(inv.total), 0)
+
+        // Calculate total revenue from project quotes (totalPrice)
+        const totalRevenue = projects
+            .reduce((sum, project) => sum + Number(project.totalPrice || 0), 0)
 
         return NextResponse.json({
             totalProjects,

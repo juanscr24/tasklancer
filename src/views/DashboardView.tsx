@@ -59,13 +59,12 @@ export const DashboardView = () => {
         { title: t.summary.totalClients, value: data.summary.totalClients },
     ];
 
-
     return (
         <div className="flex min-h-screen bg-(--bg-1) text-white font-sans">
             {/* Main Content - Offset by sidebar width (w-60 = 15rem = 240px) */}
             <div className="flex-1 flex flex-col">
 
-                <main className="flex-1 p-8 overflow-y-auto">
+                <main className="flex-1 p-4 md:p-8 overflow-y-auto">
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-(--text-1)">{t.title}</h1>
                         <p className="text-(--text-2) mt-2 text-sm">{t.subtitle}</p>
@@ -74,17 +73,15 @@ export const DashboardView = () => {
                     {/* CONTENEDOR PRINCIPAL FLEX COLUMNA */}
                     <div className="flex flex-col gap-8">
 
-                        {/* 1. FILA SUPERIOR: 3 Tarjetas (Anchos iguales) */}
-                        <div className="flex flex-row justify-around items-center gap-6 w-full bg-(--bg-2) rounded-xl shadow-lg p-6 text-(--text-1) h-full border border-(--border-1)" >
+                        {/* 1. FILA SUPERIOR: 4 Tarjetas (Grid Responsive) */}
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full" >
                             {resumenData.map((item, i) => (
-                                <div key={i} className="flex justify-around items-center w-full">
-                                    <CardResumen {...item} />
-                                </div>
+                                <CardResumen key={i} {...item} />
                             ))}
                         </div>
 
                         {/* Filter Section - Dropdown */}
-                        <div className="relative w-64 z-20">
+                        <div className="relative w-full sm:w-64 z-20">
                             <button
                                 onClick={() => setIsFilterOpen(!isFilterOpen)}
                                 className="w-full flex items-center justify-between px-4 py-2 bg-(--bg-2) border border-(--border-1) rounded-lg text-sm text-(--text-1) hover:bg-(--bg-3) transition-colors"
@@ -141,12 +138,12 @@ export const DashboardView = () => {
                         {/* 2. FILA MEDIA: Urgent Tasks (66%) + Financial (33%) */}
                         <div className="flex flex-col lg:flex-row gap-6 w-full">
                             {/* Urgent Tasks - Flex 2 */}
-                            <div className="lg:flex-2 flex flex-col">
+                            <div className="lg:w-2/3 flex flex-col">
                                 <CardUrgentTasks tasks={data.urgentTasks} />
                             </div>
 
                             {/* Financial Snapshot - Flex 1 */}
-                            <div className="lg:flex-1 flex flex-col">
+                            <div className="lg:w-1/3 flex flex-col">
                                 <CardFinancialSnapshot total={data.quotationsTotal || 0} quotations={data.quotations || []} />
                             </div>
                         </div>

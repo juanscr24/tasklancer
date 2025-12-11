@@ -22,12 +22,9 @@ export const HeaderSearch = ({ className, onMenuClick }: HeaderSearchProps) => {
             </div>
 
             {/* Notification Bell */}
-            <div className='flex items-center gap-10 max-md:gap-3'>
+            <div className='flex items-center gap-10 max-md:gap-3 p-2'>
                 <LanguageSwitcher />
                 <ButtonMode />
-                <button className="hover:scale-103 text-(--text-1) transition-all duration-200 cursor-pointer rounded-md">
-                    <Bell />
-                </button>
             </div>
         </header>
     )

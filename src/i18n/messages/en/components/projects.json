@@ -1,6 +1,6 @@
 {
     "header": "Projects",
-    "newProject": "New project",
+    "newProject": "+ Project",
     "searchPlaceholder": "Search projects...",
     "filters": {
         "all": "All",

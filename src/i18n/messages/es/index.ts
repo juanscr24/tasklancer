@@ -32,5 +32,4 @@ export default {
     projectModal,
     taskModal,
     services,
-    taskModal
 };

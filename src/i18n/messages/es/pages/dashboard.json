@@ -15,11 +15,12 @@
         "dueLater": "Vence Luego",
         "overdue": "Atrasada",
         "dueToday": "Vence Hoy",
-        "dueTomorrow": "Vence Mañana"
+        "dueTomorrow": "Vence Mañana",
+        "noTasks": "No hay tareas urgentes en este momento"
     },
     "financial": {
-        "title": "Financiero",
-        "snapshot": "Resumen",
+        "title": "Resumen",
+        "snapshot": "Financiero",
         "seeMore": "Ver Más",
         "walletLimitExceeded": "Límite de Cartera Excedido",
         "noQuotations": "Sin cotizaciones activas"

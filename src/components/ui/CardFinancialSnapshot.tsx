@@ -15,10 +15,11 @@ export function CardFinancialSnapshot({ total, quotations }: CardFinancialSnapsh
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { messages } = useLocaleStore();
     const t = messages.dashboard.financial;
-    const showSeeMore = total > WALLET_LIMIT;
+    const isLimitExceeded = total > WALLET_LIMIT;
 
-    // Take top 3 for preview
-    const previewQuotations = quotations.slice(0, 3);
+    const previewQuotations = quotations.filter(q => q.status === 'COMPLETED').slice(0, 3);
+
+    const showSeeMoreButton = quotations.length > previewQuotations.length;
 
     return (
         <>
@@ -28,7 +29,7 @@ export function CardFinancialSnapshot({ total, quotations }: CardFinancialSnapsh
                         <h4 className="text-lg font-semibold">{t.title}</h4>
                         <h4 className="text-lg font-semibold text-(--text-2)">{t.snapshot}</h4>
                     </div>
-                    {showSeeMore && (
+                    {showSeeMoreButton && (
                         <button
                             onClick={() => setIsModalOpen(true)}
                             className="text-xs bg-(--btn-1) hover:bg-(--btn-2) text-white px-2 py-1 rounded transition-colors flex items-center gap-1"
@@ -39,8 +40,18 @@ export function CardFinancialSnapshot({ total, quotations }: CardFinancialSnapsh
                     )}
                 </div>
 
-                <div className="text-4xl font-bold mb-6 text-(--text-1)">
-                    ${Number(total).toFixed(2)}
+                <div className="mb-6">
+                    <div className="text-3xl font-bold text-(--text-1)">
+                        ${Number(total).toFixed(2)} USD
+                    </div>
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
+                        <div className="text-xs font-medium text-green-300">
+                            {(total * 4200).toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
+                        </div>
+                        <div className="text-xs font-medium text-yellow-200">
+                            {(total * 0.92).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="space-y-4 flex-1 overflow-hidden">
@@ -64,7 +75,7 @@ export function CardFinancialSnapshot({ total, quotations }: CardFinancialSnapsh
                     )}
                 </div>
 
-                {showSeeMore && (
+                {isLimitExceeded && (
                     <div className="mt-4 pt-2 border-t border-(--border-1) text-center">
                         <span className="text-xs text-(--priority-high-1)">
                             {t.walletLimitExceeded} ({WALLET_LIMIT})
