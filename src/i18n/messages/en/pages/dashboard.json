@@ -1,0 +1,37 @@
+{
+    "title": "Dashboard Overview",
+    "subtitle": "Here's your command center for today",
+    "summary": {
+        "tasksDueToday": "Today's Tasks",
+        "plannedHours": "Planned Hours",
+        "activeProjects": "Active Projects",
+        "totalClients": "Total Clients"
+    },
+    "filter": {
+        "allClients": "All Clients"
+    },
+    "urgentTasks": {
+        "title": "Urgent Tasks",
+        "dueLater": "Due Later",
+        "overdue": "Overdue",
+        "dueToday": "Due Today",
+        "dueTomorrow": "Due Tomorrow",
+        "noTasks": "No urgent tasks at the moment"
+    },
+    "financial": {
+        "title": "Financial",
+        "snapshot": "Snapshot",
+        "seeMore": "See More",
+        "walletLimitExceeded": "Wallet Limit Exceeded",
+        "noQuotations": "No active quotations"
+    },
+    "activeProjects": {
+        "title": "Active Projects"
+    },
+    "quotationsModal": {
+        "title": "All Quotations",
+        "noQuotations": "No quotations found.",
+        "totalQuotations": "Total Quotations",
+        "totalValue": "Total Value"
+    }
+}

@@ -1,6 +1,9 @@
+import "./globals.css";
+import "./fonts.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { LocaleProvider } from "@/components/providers/LocaleProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -13,9 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Tasklancer",
-    description: "Tasklancer es una plataforma de gestión de tareas que te permite crear, asignar y gestionar tus tareas de manera eficiente.",
-};
+    title: {
+        template: "%s",
+        default: "TaskLancer",
+    },
+    description: "Tasklancer es una plataforma de gestión de tareas que te permite crear, asignar y gestionar tus tareas de manera eficiente."
+}
 
 export default function RootLayout({
     children,
@@ -23,11 +29,35 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="es" data-scroll-behavior="smooth" suppressHydrationWarning>
+            <head>
+                {/* Blocking script to prevent flash of light mode */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            (function() {
+                                try {
+                                    const stored = localStorage.getItem('theme-storage');
+                                    if (stored) {
+                                        const { state } = JSON.parse(stored);
+                                        if (state && state.theme === 'dark') {
+                                            document.documentElement.classList.add('dark');
+                                        }
+                                    }
+                                } catch (e) {}
+                            })();
+                        `,
+                    }}
+                />
+            </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                {children}
+                <AuthProvider>
+                    <LocaleProvider>
+                        {children}
+                    </LocaleProvider>
+                </AuthProvider>
             </body>
         </html>
     );

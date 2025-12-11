@@ -1,0 +1,61 @@
+{
+    "title": "Freelancer Services",
+    "subtitle": "Professional tools to manage your freelance business",
+    "stats": {
+        "activeProjects": "Active Projects",
+        "clients": "Clients",
+        "completedTasks": "Completed Tasks",
+        "totalRevenue": "Total Revenue",
+        "total": "total",
+        "active": "active",
+        "paidInvoices": "paid invoices"
+    },
+    "categories": {
+        "projectManagement": {
+            "title": "Project Management",
+            "description": "Organize and manage your freelance projects"
+        },
+        "clientManagement": {
+            "title": "Client Management",
+            "description": "Organize and maintain relationships with your clients"
+        },
+        "timeManagement": {
+            "title": "Time Management",
+            "description": "Track and optimize your work time"
+        },
+        "invoicing": {
+            "title": "Invoicing",
+            "description": "Manage your invoices and payments professionally"
+        }
+    },
+    "services": {
+        "projectsAndTasks": {
+            "title": "Projects and Tasks",
+            "description": "Create projects, assign tasks and organize your work with Kanban boards"
+        },
+        "projectQuotes": {
+            "title": "Project Quotes",
+            "description": "Generate professional quotes with hour and price estimates"
+        },
+        "clientRequirements": {
+            "title": "Client Requirements",
+            "description": "Document and manage the requirements of each project"
+        },
+        "clientDatabase": {
+            "title": "Client Database",
+            "description": "Store contact information, company, associated projects and important notes"
+        },
+        "timeTracker": {
+            "title": "Time Tracker",
+            "description": "Track hours worked per project with automatic start/pause"
+        },
+        "invoiceGenerator": {
+            "title": "Invoice Generator",
+            "description": "Create professional invoices with client details and custom concepts"
+        }
+    },
+    "badges": {
+        "implemented": "Implemented",
+        "comingSoon": "Coming Soon"
+    }
+}

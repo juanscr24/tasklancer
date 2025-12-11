@@ -1,0 +1,9 @@
+{
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "********",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Write your name",
+    "confirmPassword": "Confirm Password"
+}

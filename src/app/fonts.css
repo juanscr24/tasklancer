@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Supreme';
+    src: url('/fonts/supreme/fonts/Supreme-Regular.woff2') format('woff2'),
+        url('/fonts/supreme/fonts/Supreme-Regular.woff2') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Supreme';
+    src: url('/fonts/supreme/fonts/Supreme-Medium.woff2') format('woff2'),
+        url('/fonts/supreme/fonts/Supreme-Medium.woff2') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Supreme';
+    src: url('/fonts/supreme/fonts/Supreme-Bold.woff2') format('woff2'),
+        url('/fonts/supreme/fonts/Supreme-Bold.woff2') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* --- MÁS GRUESOS --- */
+@font-face {
+    font-family: 'Supreme';
+    src: url('/fonts/supreme/fonts/Supreme-Extrabold.woff2') format('woff2'),
+        url('/fonts/supreme/fonts/Supreme-Extrabold.woff2') format('woff');
+    font-weight: 800; /* ExtraBold */
+    font-style: normal;
+    font-display: swap;
+}

@@ -1,0 +1,12 @@
+{
+    "emailRequired": "El correo electrónico es requerido",
+    "emailInvalid": "El correo electrónico es inválido",
+    "passwordRequired": "La contraseña es requerida",
+    "passwordMin": "La contraseña debe tener al menos 6 caracteres",
+    "passwordMax": "La contraseña debe tener menos de 100 caracteres",
+    "nameRequired": "El nombre es requerido",
+    "nameMin": "El nombre debe tener al menos 2 caracteres",
+    "nameMax": "El nombre debe tener menos de 100 caracteres",
+    "confirmPasswordRequired": "Confirmar contraseña es requerido",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden"
+}

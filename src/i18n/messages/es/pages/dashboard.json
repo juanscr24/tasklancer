@@ -1,0 +1,37 @@
+{
+    "title": "Resumen del Panel",
+    "subtitle": "Aquí está tu centro de comando para hoy",
+    "summary": {
+        "tasksDueToday": "Tareas de Hoy",
+        "plannedHours": "Horas Planificadas",
+        "activeProjects": "Proyectos Activos",
+        "totalClients": "Total Clientes"
+    },
+    "filter": {
+        "allClients": "Todos los Clientes"
+    },
+    "urgentTasks": {
+        "title": "Tareas Urgentes",
+        "dueLater": "Vence Luego",
+        "overdue": "Atrasada",
+        "dueToday": "Vence Hoy",
+        "dueTomorrow": "Vence Mañana",
+        "noTasks": "No hay tareas urgentes en este momento"
+    },
+    "financial": {
+        "title": "Resumen",
+        "snapshot": "Financiero",
+        "seeMore": "Ver Más",
+        "walletLimitExceeded": "Límite de Cartera Excedido",
+        "noQuotations": "Sin cotizaciones activas"
+    },
+    "activeProjects": {
+        "title": "Proyectos Activos"
+    },
+    "quotationsModal": {
+        "title": "Todas las Cotizaciones",
+        "noQuotations": "No se encontraron cotizaciones.",
+        "totalQuotations": "Total Cotizaciones",
+        "totalValue": "Valor Total"
+    }
+}

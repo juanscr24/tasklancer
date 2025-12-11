@@ -1,0 +1,9 @@
+{
+    "email": "Correo electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "********",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "Escribe tu nombre",
+    "confirmPassword": "Confirmar contraseña"
+}
