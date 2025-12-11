@@ -3,15 +3,29 @@
 import "dotenv/config";
 import { defineConfig, env } from "prisma/config";
 
-// Helper to add SSL parameters to the database URL
+// Helper to add SSL and connection pooling parameters to the database URL
 const getDatabaseUrl = () => {
   const baseUrl = env("DATABASE_URL");
-  // Add SSL parameters if not already present
-  if (baseUrl && !baseUrl.includes('sslmode')) {
-    const separator = baseUrl.includes('?') ? '&' : '?';
-    return `${baseUrl}${separator}sslmode=require`;
+  if (!baseUrl) return baseUrl;
+
+  // Parse URL to add parameters
+  const url = new URL(baseUrl);
+
+  // Add SSL if not present
+  if (!url.searchParams.has('sslmode')) {
+    url.searchParams.set('sslmode', 'require');
   }
-  return baseUrl;
+
+  // Add connection pooling parameters to prevent "too many connections" errors
+  if (!url.searchParams.has('connection_limit')) {
+    url.searchParams.set('connection_limit', '5');
+  }
+
+  if (!url.searchParams.has('pool_timeout')) {
+    url.searchParams.set('pool_timeout', '10');
+  }
+
+  return url.toString();
 };
 
 export default defineConfig({

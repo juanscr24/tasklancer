@@ -61,6 +61,16 @@ export const ServicesView = () => {
         }
     ]
 
+    // Show loading spinner on initial load
+    if (isLoading && stats.activeProjects === 0 && stats.totalProjects === 0) {
+        return (
+            <div className="flex min-h-[calc(100vh-95px)] bg-(--bg-1) text-white font-sans items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
+
+
     return (
         <div className="flex flex-col bg-(--bg-1)">
             {/* Header */}

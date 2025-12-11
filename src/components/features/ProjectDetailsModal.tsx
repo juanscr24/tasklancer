@@ -16,8 +16,8 @@ interface ProjectDetailsModalProps {
 export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetailsModalProps) => {
     const { requirements, fetchRequirements, createRequirement, updateRequirement, deleteRequirement } = useRequirements(project.id)
 
-    const [hourlyRate, setHourlyRate] = useState<number>(project.hourlyRate ? Number(project.hourlyRate) : 0)
-    const [estimatedHours, setEstimatedHours] = useState<number>(project.estimatedHours ? Number(project.estimatedHours) : 0)
+    const [hourlyRate, setHourlyRate] = useState<number | ''>(project.hourlyRate ? Number(project.hourlyRate) : '')
+    const [estimatedHours, setEstimatedHours] = useState<number | ''>(project.estimatedHours ? Number(project.estimatedHours) : '')
     const [priority, setPriority] = useState<string>(project.priority || 'MEDIUM')
     const [newRequirement, setNewRequirement] = useState('')
     const [isSaving, setIsSaving] = useState(false)
@@ -26,7 +26,9 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
 
     // Calculate total price
     const totalPrice = useMemo(() => {
-        return hourlyRate * estimatedHours
+        const rate = typeof hourlyRate === 'number' ? hourlyRate : 0
+        const hours = typeof estimatedHours === 'number' ? estimatedHours : 0
+        return rate * hours
     }, [hourlyRate, estimatedHours])
 
     // Fetch requirements on mount
@@ -38,10 +40,12 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
         setIsSaving(true)
         try {
             await onUpdate(project.id, {
-                hourlyRate,
-                estimatedHours,
+                hourlyRate: typeof hourlyRate === 'number' ? hourlyRate : 0,
+                estimatedHours: typeof estimatedHours === 'number' ? estimatedHours : 0,
                 priority: priority as any
             })
+            // Close modal after successful save
+            onClose()
         } catch (error) {
             console.error('Error saving quotation:', error)
         } finally {
@@ -131,7 +135,8 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
                                     <input
                                         type="number"
                                         value={hourlyRate}
-                                        onChange={(e) => setHourlyRate(Number(e.target.value))}
+                                        onChange={(e) => setHourlyRate(e.target.value === '' ? '' : Number(e.target.value))}
+                                        placeholder="0"
                                         className="w-full pl-8 pr-4 py-2 border-none bg-(--bg-1) rounded-lg text-(--text-1) focus:outline-none focus:border-(--btn-1)"
                                         min="0"
                                         step="0.01"
@@ -149,7 +154,8 @@ export const ProjectDetailsModal = ({ project, onClose, onUpdate }: ProjectDetai
                                     <input
                                         type="number"
                                         value={estimatedHours}
-                                        onChange={(e) => setEstimatedHours(Number(e.target.value))}
+                                        onChange={(e) => setEstimatedHours(e.target.value === '' ? '' : Number(e.target.value))}
+                                        placeholder="0"
                                         className="w-full pl-10 pr-4 py-2 border-none bg-(--bg-1) rounded-lg text-(--text-1) focus:outline-none focus:border-(--btn-1)"
                                         min="0"
                                         step="0.5"
