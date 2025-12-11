@@ -1,0 +1,14 @@
+{
+    "header": "Proyectos",
+    "newProject": "Nuevo proyecto",
+    "searchPlaceholder": "Buscar proyectos...",
+    "filters": {
+        "all": "Todos",
+        "active": "Activos",
+        "completed": "Completado",
+        "paused": "En Pausa"
+    },
+    "noDescription": "Sin descripción",
+    "progress": "Progreso",
+    "openProjects": "Abrir proyectos"
+}

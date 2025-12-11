@@ -7,6 +7,10 @@ import sidebar from './components/sidebar.json';
 import navbar from './components/navbar.json';
 import validations from './validations.json';
 import hero from './pages/hero.json';
+import projects from './components/projects.json';
+import taskboard from './components/taskboard.json';
+import projectModal from './components/projectModal.json';
+import taskModal from './components/taskModal.json';
 
 export default {
     common,
@@ -18,4 +22,8 @@ export default {
     navbar,
     validations,
     hero,
+    projects,
+    taskboard,
+    projectModal,
+    taskModal,
 };

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
-import { HeaderSearch, Sidebar } from '@components'
 import { auth } from '@main/auth'
 import { redirect } from 'next/navigation'
+import { MainLayoutClient } from '@/components/features/MainLayoutClient'
 
 interface Props {
     children: ReactNode
@@ -19,15 +19,5 @@ export default async function MainLayout({ children }: Props) {
         redirect('/auth')
     }
 
-    return (
-        <div className="min-h-screen">
-            {/* SIDEBAR */}
-            <Sidebar />
-            {/* CONTENIDO */}
-            <main className="ml-60">
-                <HeaderSearch />
-                {children}
-            </main>
-        </div>
-    )
+    return <MainLayoutClient>{children}</MainLayoutClient>
 }

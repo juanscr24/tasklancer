@@ -95,3 +95,21 @@ export async function deleteProject(projectId: string, userId: string): Promise<
 
     return response.json()
 }
+
+/**
+ * Update project order
+ */
+export async function updateProjectsOrder(userId: string, projectIds: string[]): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/reorder`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, projectIds }),
+    })
+
+    if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Failed to update project order')
+    }
+}

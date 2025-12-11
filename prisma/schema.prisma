@@ -112,6 +112,7 @@ model Project {
   icon        String?
   color       String        @default("#3B82F6")
   status      ProjectStatus @default(ACTIVE)
+  order       Int?          @default(0)
 
   // Quotation fields
   hourlyRate     Decimal?        @db.Decimal(10, 2)

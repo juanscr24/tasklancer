@@ -17,11 +17,13 @@ export const useProjectSidebar = () => {
         deleteProject,
         setUserId,
         clearData,
-        userId
+        userId,
+        reorderProjects
     } = useProjectStore()
 
     const { data: session } = useSession()
     const [searchQuery, setSearchQuery] = useState('')
+    const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'completed' | 'paused'>('all')
     const [showNewProjectModal, setShowNewProjectModal] = useState(false)
     const [editingProject, setEditingProject] = useState<{ id: string; data: ProjectFormData } | null>(null)
     const [detailsProject, setDetailsProject] = useState<Project | null>(null)
@@ -44,10 +46,19 @@ export const useProjectSidebar = () => {
         }
     }, [userId, fetchProjects, fetchTasks])
 
-    // Filter projects by search query
-    const filteredProjects = projects.filter((project) =>
-        project.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    // Filter projects by search query and status
+    const filteredProjects = projects.filter((project) => {
+        const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase())
+        
+        if (statusFilter === 'all') return matchesSearch
+        if (statusFilter === 'active') return matchesSearch && project.status === 'ACTIVE'
+        if (statusFilter === 'completed') return matchesSearch && project.status === 'COMPLETED'
+        if (statusFilter === 'paused') {
+            return matchesSearch && ['ON_HOLD', 'CANCELLED'].includes(project.status)
+        }
+        
+        return matchesSearch
+    })
 
     const handleCreateProject = useCallback(async (data: ProjectFormData) => {
         await addProject({
@@ -67,6 +78,7 @@ export const useProjectSidebar = () => {
                 description: data.description || null,
                 icon: data.icon || null,
                 color: data.color,
+                status: data.status || 'ACTIVE',
                 clientId: data.clientId || null
             })
             setEditingProject(null)
@@ -89,6 +101,7 @@ export const useProjectSidebar = () => {
                     description: project.description || '',
                     icon: project.icon || '📱',
                     color: project.color,
+                    status: project.status,
                     clientId: project.clientId || null
                 }
             })
@@ -119,18 +132,25 @@ export const useProjectSidebar = () => {
         setDetailsProject(project)
     }, [setSelectedProject])
 
+    // Handle project reordering
+    const handleReorderProjects = useCallback((projectIds: string[]) => {
+        reorderProjects(projectIds)
+    }, [reorderProjects])
+
     return {
         // State
         filteredProjects,
         selectedProjectId,
         tasks,
         searchQuery,
+        statusFilter,
         showNewProjectModal,
         editingProject,
         detailsProject,
 
         // Setters
         setSearchQuery,
+        setStatusFilter,
         setShowNewProjectModal,
         setEditingProject,
         setDetailsProject,
@@ -142,6 +162,7 @@ export const useProjectSidebar = () => {
         handleUpdateProject,
         handleProjectSelect,
         handleOpenProjectModal,
-        openEditModal
+        openEditModal,
+        handleReorderProjects
     }
 }

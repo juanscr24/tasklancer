@@ -24,6 +24,7 @@ interface ProjectState {
     deleteTask: (taskId: string) => Promise<void>
     setSelectedProject: (projectId: string | null) => void
     getProjectTasks: (projectId: string) => Task[]
+    reorderProjects: (projectIds: string[]) => Promise<void>
 }
 
 export const useProjectStore = create<ProjectState>()(
@@ -232,6 +233,27 @@ export const useProjectStore = create<ProjectState>()(
 
             getProjectTasks: (projectId) => {
                 return get().tasks.filter((task) => task.projectId === projectId)
+            },
+
+            reorderProjects: async (projectIds) => {
+                const { projects, userId } = get()
+                if (!userId) return
+
+                // Optimistically update UI
+                const reorderedProjects = projectIds
+                    .map(id => projects.find(p => p.id === id))
+                    .filter(Boolean) as Project[]
+                set({ projects: reorderedProjects })
+
+                // Persist to backend
+                try {
+                    const { updateProjectsOrder } = await import('@/services/project.service')
+                    await updateProjectsOrder(userId, projectIds)
+                } catch (error) {
+                    console.error('Error updating project order:', error)
+                    // Optionally revert on error
+                    set({ projects })
+                }
             }
         }),
         {

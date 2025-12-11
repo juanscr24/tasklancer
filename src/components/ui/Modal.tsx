@@ -31,7 +31,7 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 max-sm:p-2">
             {/* Backdrop with blur effect */}
             <div
                 className="absolute inset-0 bg-(--bg-2)/30 backdrop-blur-xs"
@@ -39,10 +39,10 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
             />
 
             {/* Modal Content */}
-            <div className="relative bg-(--bg-1) rounded-2xl w-full max-w-md animate-in zoom-in-95 duration-200 border border-(--bg-2)">
+            <div className="relative bg-(--bg-1) rounded-2xl max-sm:rounded-xl w-full max-w-3xl max-sm:max-w-full max-h-[90vh] max-sm:max-h-[95vh] flex flex-col animate-in zoom-in-95 duration-200 border border-(--bg-2)">
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-(--bg-2)">
-                    <h2 className="text-2xl font-semibold text-(--text-1)">{title}</h2>
+                <div className="flex items-center justify-between p-6 max-sm:p-4 border-b border-(--bg-2)">
+                    <h2 className="text-2xl max-sm:text-xl font-semibold text-(--text-1)">{title}</h2>
                     <button
                         onClick={onClose}
                         className="p-2 rounded-lg text-(--text-2) hover:bg-(--bg-2) hover:text-(--text-1) transition-all duration-200"
@@ -53,7 +53,7 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
                 </div>
 
                 {/* Body */}
-                <div className="p-6">
+                <div className="p-6 max-sm:p-4 overflow-y-auto">
                     {children}
                 </div>
             </div>

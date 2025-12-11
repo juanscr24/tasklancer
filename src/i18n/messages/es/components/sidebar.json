@@ -7,5 +7,6 @@
     "appearance": "Apariencia",
     "language": "Idioma",
     "profile": "Perfil",
-    "mode": "Modo"
+    "mode": "Modo",
+    "logout": "Cerrar sesión"
 }

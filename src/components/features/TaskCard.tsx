@@ -19,6 +19,8 @@ const priorityColors = {
 export const TaskCard = ({ task, onDragStart }: TaskCardProps) => {
     const { deleteTask, updateTask, projects } = useProjectStore()
     const [showEditModal, setShowEditModal] = useState(false)
+    const [dragStartTime, setDragStartTime] = useState(0)
+    const [isDragging, setIsDragging] = useState(false)
 
     const formatDate = (dateString: string | null) => {
         if (!dateString) return 'No date'
@@ -26,7 +28,13 @@ export const TaskCard = ({ task, onDragStart }: TaskCardProps) => {
         return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' })
     }
 
+    const handleMouseDown = () => {
+        setDragStartTime(Date.now())
+        setIsDragging(false)
+    }
+
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        setIsDragging(true)
         e.dataTransfer.effectAllowed = 'move'
         e.dataTransfer.setData('text/plain', task.id)
 
@@ -40,6 +48,15 @@ export const TaskCard = ({ task, onDragStart }: TaskCardProps) => {
 
     const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
         e.currentTarget.style.opacity = '1'
+        setIsDragging(false)
+    }
+
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        // Only open modal if it was a quick click (not a drag)
+        const clickDuration = Date.now() - dragStartTime
+        if (!isDragging && clickDuration < 200) {
+            setShowEditModal(true)
+        }
     }
 
     const handleDelete = async () => {
@@ -57,7 +74,8 @@ export const TaskCard = ({ task, onDragStart }: TaskCardProps) => {
             title: data.title,
             description: data.description || null,
             priority: data.priority,
-            dueDate: data.dueDate || null
+            dueDate: data.dueDate || null,
+            status: data.status
         })
     }
 
@@ -68,9 +86,11 @@ export const TaskCard = ({ task, onDragStart }: TaskCardProps) => {
         <>
             <div
                 draggable
+                onMouseDown={handleMouseDown}
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
-                className="bg-(--bg-1) border border-(--bg-2) rounded-lg p-4 mb-3 hover:shadow-lg transition-all duration-200 cursor-grab active:cursor-grabbing group"
+                onClick={handleClick}
+                className="bg-(--bg-1) border border-(--bg-2) rounded-lg p-4 mb-3 hover:shadow-lg transition-all duration-200 cursor-pointer group"
             >
                 {/* Header with Title and Menu */}
                 <div className="flex items-start justify-between mb-2">
@@ -130,7 +150,8 @@ export const TaskCard = ({ task, onDragStart }: TaskCardProps) => {
                         description: task.description || '',
                         priority: task.priority,
                         dueDate: task.dueDate || '',
-                        projectId: task.projectId
+                        projectId: task.projectId,
+                        status: task.status
                     }}
                     projectId={task.projectId}
                     mode="edit"

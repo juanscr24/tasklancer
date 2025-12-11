@@ -1,0 +1,33 @@
+{
+    "create": {
+        "title": "New Task",
+        "button": "Create Task"
+    },
+    "edit": {
+        "title": "Edit Task",
+        "button": "Save Changes"
+    },
+    "fields": {
+        "title": {
+            "label": "Task Title",
+            "placeholder": "Enter task title",
+            "required": "Title is required"
+        },
+        "description": {
+            "label": "Description",
+            "placeholder": "Enter task description"
+        },
+        "priority": {
+            "label": "Priority",
+            "options": {
+                "low": "Low",
+                "medium": "Medium",
+                "high": "High"
+            }
+        },
+        "dueDate": {
+            "label": "Due Date"
+        }
+    },
+    "cancel": "Cancel"
+}

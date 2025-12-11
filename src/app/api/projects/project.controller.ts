@@ -31,9 +31,14 @@ export async function handleGetProjects(request: NextRequest) {
                 tasks: true,
                 client: true,
             },
-            orderBy: {
-                createdAt: 'desc',
-            },
+            orderBy: [
+                {
+                    order: 'asc',
+                },
+                {
+                    createdAt: 'desc',
+                }
+            ],
         })
 
         return NextResponse.json(projects)

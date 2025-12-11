@@ -1,0 +1,21 @@
+{
+    "title": "Task Board",
+    "newTask": "New Task",
+    "createFirstTask": "Create Your First Task",
+    "emptyState": {
+        "noProject": {
+            "title": "Choose Your Project",
+            "description": "Select a project from the sidebar to view and manage its tasks"
+        },
+        "noTasks": {
+            "title": "No Tasks Yet",
+            "description": "You don't have tasks yet, create your task to get started"
+        }
+    },
+    "columns": {
+        "todo": "To-Do",
+        "inProgress": "In Progress",
+        "done": "Done"
+    },
+    "noTasksYet": "No tasks yet"
+}

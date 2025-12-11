@@ -1,6 +1,7 @@
 'use client'
 import { Project } from '@/types/features/project'
 import { DropdownMenu } from '@/components/ui/DropdownMenu'
+import { Tally2 } from 'lucide-react'
 
 interface ProjectCardProps {
     project: Project
@@ -12,6 +13,9 @@ interface ProjectCardProps {
     onEdit: () => void
     onDelete: () => void
     onInvoice?: boolean
+    onDragStart?: () => void
+    onDragEnd?: () => void
+    isDragging?: boolean
 }
 
 export const ProjectCard = ({
@@ -23,18 +27,44 @@ export const ProjectCard = ({
     onOpenModal,
     onEdit,
     onDelete,
-    onInvoice
+    onInvoice,
+    onDragStart,
+    onDragEnd,
+    isDragging
 }: ProjectCardProps) => {
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        e.dataTransfer.effectAllowed = 'move'
+        e.dataTransfer.setData('text/plain', project.id)
+        if (onDragStart) onDragStart()
+    }
+
+    const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+        if (onDragEnd) onDragEnd()
+    }
+
     return (
         <div
             onClick={onSelect}
-            className={`p-4 rounded-lg cursor-pointer transition-all ${isSelected
-                ? 'bg-(--bg-1) text-white shadow-lg'
-                : 'bg-(--btn-2) hover:bg-(--bg-1)'
+            className={`p-4 rounded-lg cursor-pointer transition-all relative ${isDragging ? 'opacity-50' : ''
+                } ${isSelected
+                    ? 'bg-(--bg-1) text-white shadow-lg'
+                    : 'bg-(--btn-2) hover:bg-(--bg-1)'
                 }`}
         >
+            {/* Drag Handle */}
+            <div
+                draggable
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+                onClick={(e) => e.stopPropagation()}
+                className="absolute left-0 top-1/2 -translate-y-1/2 cursor-grab text-(--text-1) active:cursor-grabbing rounded transition-colors"
+                title="Drag to reorder"
+            >
+                <Tally2 strokeWidth={0.4} />
+            </div>
+
             {/* Project Header */}
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-3 mb-3 ml-1">
                 <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center text-2xl"
                     style={{ backgroundColor: isSelected ? 'rgba(255,255,255,0.2)' : project.color }}

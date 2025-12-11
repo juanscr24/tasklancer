@@ -7,5 +7,6 @@
     "appearance": "Appearance",
     "language": "Language",
     "profile": "Profile",
-    "mode": "Mode"
+    "mode": "Mode",
+    "logout": "Logout"
 }
