@@ -1,0 +1,31 @@
+{
+    "title": "Editar Perfil",
+    "subtitle": "Gestiona tu información personal",
+    "uploadPhoto": "Subir nueva foto",
+    "uploadSpecs": "Se recomienda al menos 800×800 px.",
+    "uploadFormat": "Se permite JPG o PNG",
+    "personalInfo": "Información Personal",
+    "edit": "Editar",
+    "cancel": "Cancelar",
+    "save": "Guardar cambios",
+    "saving": "Guardando...",
+    "fullName": "Nombre Completo",
+    "email": "Correo",
+    "phone": "Teléfono",
+    "location": "Ubicación",
+    "bio": "Biografía",
+    "bioPlaceholder": "Cuéntanos sobre ti...",
+    "noBio": "Aún no has agregado una biografía. Haz clic en editar para agregarla.",
+    "memberSince": "Miembro desde",
+    "notSet": "No establecido",
+    "sections": {
+        "personal": "Editar Información Personal",
+        "location": "Editar Ubicación",
+        "bio": "Editar Biografía"
+    },
+    "placeholders": {
+        "name": "Tu nombre completo",
+        "phone": "(123) 456-7890",
+        "location": "Ciudad, País"
+    }
+}

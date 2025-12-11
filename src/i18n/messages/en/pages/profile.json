@@ -1,0 +1,31 @@
+{
+    "title": "Edit Profile",
+    "subtitle": "Manage your personal information",
+    "uploadPhoto": "Upload new photo",
+    "uploadSpecs": "At least 800×800 px recommended.",
+    "uploadFormat": "JPG or PNG is allowed",
+    "personalInfo": "Personal Info",
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about yourself...",
+    "noBio": "No bio added yet. Click edit to add your bio.",
+    "memberSince": "Member since",
+    "notSet": "Not set",
+    "sections": {
+        "personal": "Edit Personal Info",
+        "location": "Edit Location",
+        "bio": "Edit Bio"
+    },
+    "placeholders": {
+        "name": "Your full name",
+        "phone": "(123) 456-7890",
+        "location": "City, Country"
+    }
+}

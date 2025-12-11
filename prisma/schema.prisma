@@ -17,6 +17,11 @@ model User {
   password      String?
   role          UserRole  @default(FREELANCER)
 
+  // Profile fields
+  phone    String?
+  bio      String? @db.Text
+  location String?
+
   // Relations
   accounts    Account[]
   sessions    Session[]

@@ -7,9 +7,11 @@ import { ClientsGrid } from '@/components/features/ClientsGrid'
 import { NewClientModal, ClientFormData } from '@/components/features/NewClientModal'
 import { useClients } from '@/hooks'
 import { Button } from '@/components'
+import { useTranslations } from 'next-intl'
 
 
 export const ClientsView = () => {
+    const t = useTranslations('clients')
 
     const { data: session } = useSession()
     const [userId, setUserId] = useState<string | null>(null)
@@ -75,7 +77,7 @@ export const ClientsView = () => {
     }
 
     const handleDeleteClient = async (clientId: string) => {
-        if (confirm('Are you sure you want to delete this client? This action cannot be undone.')) {
+        if (confirm(t('deleteConfirm'))) {
             await deleteClient(clientId)
         }
     }
@@ -114,16 +116,16 @@ export const ClientsView = () => {
                     {clients.length === 0 ? (
                         <div className="flex items-center justify-center h-[calc(100vh-200px)]">
                             <div className="text-center max-w-md">
-                                <h2 className="text-2xl font-bold text-(--text-1) mb-2">No Clients Yet</h2>
+                                <h2 className="text-2xl font-bold text-(--text-1) mb-2">{t('noClientsTitle')}</h2>
                                 <p className="text-(--text-2) mb-6">
-                                    You don't have clients yet, create your client to get started
+                                    {t('noClientsMessage')}
                                 </p>
                                 <Button
                                     className="text-sm py-3 px-6 text-white"
                                     primary
                                     onClick={() => setShowNewClientModal(true)}
                                 >
-                                    + Create Your First Client
+                                    {t('createFirstClient')}
                                 </Button>
                             </div>
                         </div>

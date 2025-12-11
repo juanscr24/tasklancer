@@ -1,0 +1,18 @@
+{
+    "title": "Clients",
+    "newClient": "New Client",
+    "addClient": "+ Client",
+    "createFirstClient": "+ Create Your First Client",
+    "noClientsTitle": "No Clients Yet",
+    "noClientsMessage": "You don't have clients yet, create your client to get started",
+    "deleteConfirm": "Are you sure you want to delete this client? This action cannot be undone.",
+    "card": {
+        "independentClient": "Independent Client",
+        "name": "NAME:",
+        "role": "ROLE:",
+        "email": "EMAIL:",
+        "aboutNotes": "ABOUT / NOTES",
+        "noNotes": "No additional notes provided for this client.",
+        "projects": "Projects"
+    }
+}
