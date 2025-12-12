@@ -11,7 +11,7 @@ model User {
   id            String      @id @default(cuid())
   name          String?
   email         String      @unique
-  emailVerified DateTime?
+  emailVerified DateTime? // <- se marca cuando el usuario verifica el email
   image         String?
   password      String?
   role          UserRole    @default(FREELANCER)
@@ -60,12 +60,13 @@ model Session {
   @@map("sessions")
 }
 
+// Modelo de tokens de verificación para emails / magic links
 model VerificationToken {
-  identifier String   @id @unique
+  identifier String
   token      String
   expires    DateTime
 
-  @@map("verification_tokens")
+  @@unique([identifier, token])
 }
 
 model Client {
@@ -209,7 +210,7 @@ model InvoiceItem {
   @@map("invoice_items")
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// Esta tabla es del sistema (PostGIS, etc.)
 model spatial_ref_sys {
   srid      Int     @id
   auth_name String? @db.VarChar(256)

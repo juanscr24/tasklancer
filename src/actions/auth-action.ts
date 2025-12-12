@@ -60,42 +60,63 @@ export const registerAction = async (
             },
         });
 
-
-
         if (user) {
-
             return {
                 error: "User already exists",
             };
         }
 
-
         // hash de la contraseña
         const passwordHash = await bcrypt.hash(data.password, 10);
 
-
-        // crear el usuario
+        // crear el usuario (sin emailVerified todavía)
         const newUser = await db.user.create({
             data: {
                 email: data.email,
                 name: data.name,
                 password: passwordHash,
+                emailVerified: null, // No verificado aún
             },
         });
 
-        try {
-            await signIn("credentials", {
-                email: data.email,
-                password: data.password,
-                redirect: false,
-            });
-        } catch (signInError) {
-            console.log("9. Sign in failed, but user was created:", signInError);
-            // User was created successfully, even if auto-login failed
-            // Return success so the user can manually login
+        console.log("4. User created, generating verification token");
+
+        // Generar token de verificación
+        const { nanoid } = await import("nanoid");
+        const verificationToken = nanoid(32);
+        const expiresAt = new Date();
+        expiresAt.setHours(expiresAt.getHours() + 24); // Token válido por 24 horas
+
+        // Guardar el token en la base de datos
+        await db.verificationToken.create({
+            data: {
+                identifier: data.email,
+                token: verificationToken,
+                expires: expiresAt,
+            },
+        });
+
+        console.log("5. Verification token created, sending email");
+
+        // Enviar email de verificación
+        const { sendEmailVerification } = await import("@/lib/email");
+        const emailResult = await sendEmailVerification(data.email, verificationToken);
+
+        if (emailResult.error) {
+            console.error("6. Failed to send verification email");
+            // El usuario fue creado pero el email falló
+            return {
+                error: "User created but failed to send verification email. Please contact support.",
+            };
         }
 
-        return { success: true };
+        console.log("7. Verification email sent successfully");
+
+        // NO hacer auto-login, el usuario debe verificar su email primero
+        return { 
+            success: true,
+            message: "Registration successful! Please check your email to verify your account."
+        };
     } catch (error) {
         console.error("ERROR in registerAction:", error);
         if (error instanceof AuthError) {
@@ -104,6 +125,7 @@ export const registerAction = async (
         return { error: "error 500" };
     }
 };
+
 
 export const signOutAction = async () => {
     await signOut({

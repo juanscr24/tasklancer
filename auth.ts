@@ -7,6 +7,7 @@ import { loginSchema } from "@/validations";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 import type { UserRole } from "./next-auth";
+import { sendEmailVerification } from "@/lib/email";
 
 // Create the NextAuth instance with the Prisma adapter and custom configuration
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -36,43 +37,44 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         // verificar si la contraseña es correcta
         const isValid = await bcrypt.compare(data.password, user.password);
-
         if (!isValid) {
           throw new Error("Incorrect password");
         }
 
-        // VERIFICACIÓN DE EMAIL DESHABILITADA TEMPORALMENTE
-        // if (!user.emailVerified) {
-        //   const verifyTokenExits = await db.verificationToken.findFirst({
-        //     where: {
-        //       identifier: user.email,
-        //     },
-        //   });
+        // verificar email esto es opcional
+        if (!user.emailVerified) {
+          const verifyTokenExits = await db.verificationToken.findFirst({
+            where: {
+              identifier: user.email
+            }
+          })
 
-        //   // si existe un token, lo eliminamos
-        //   if (verifyTokenExits?.identifier) {
-        //     await db.verificationToken.delete({
-        //       where: {
-        //         identifier: user.email,
-        //       },
-        //     });
-        //   }
+          // si existe un token lo eliminamos usando la clave compuesta
+          if (verifyTokenExits?.identifier && verifyTokenExits?.token) {
+            await db.verificationToken.delete({
+              where: {
+                identifier_token: {
+                  identifier: verifyTokenExits.identifier,
+                  token: verifyTokenExits.token
+                }
+              }
+            })
+          }
+          // creamos un token
+          const token = nanoid()
+          await db.verificationToken.create({
+            data: {
+              identifier: user.email,
+              token,
+              expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
+            },
+          })
 
-        //   const token = nanoid();
+          // enviamos e correo electronico de verificaion
 
-        //   await db.verificationToken.create({
-        //     data: {
-        //       identifier: user.email,
-        //       token,
-        //       expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        //     },
-        //   });
-
-        //   // enviar email de verificación
-        //   // await sendEmailVerification(user.email, token);
-
-        //   throw new Error("Please verify your email address before logging in.");
-        // }
+          await sendEmailVerification(user.email, token)
+          throw new Error("Por favor chequea tu email para verficarlo")
+        }
 
         return user;
       },
@@ -81,7 +83,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   // Use JWT strategy for session management
   session: { strategy: "jwt" },
-  
+
   callbacks: {
     jwt({ token, user }) {
       if (user) { // User is available during sign-in
