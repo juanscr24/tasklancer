@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { LanguageSwitcher, AuthForm, AuthImage } from "@components";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { MenuOption } from "@/components/features/MenuOption";
 
 type AuthViewProps = {
   isVerified?: boolean;
@@ -84,7 +85,7 @@ export const AuthView = ({ isVerified }: AuthViewProps) => {
             </button>
           </div>
         </div>
-        <LanguageSwitcher className="absolute top-3 right-3" />
+        <MenuOption className="absolute top-4 left-4"/>
       </div>
 
       {/* IMAGE SECTION */}
