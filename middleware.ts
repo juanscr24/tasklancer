@@ -9,7 +9,7 @@ const { auth: middleware } = NextAuth(authConfig)
 const publicRoutes = [
   "/",
   "/auth",
-  "/api/auth/verify-email",
+  "/api/verify-email",
 ];
 // Middleware
 export default middleware((req) => {

@@ -62,5 +62,5 @@ export async function GET(request: NextRequest) {
     })
 
     //si todo esta bien lo redirecionamos a la página de auth con el parámetro verified
-    redirect("/auth")
+    redirect("/auth?verified=true")
 }
