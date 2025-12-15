@@ -17,7 +17,9 @@ export const LoginForm = () => {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const verified = searchParams.get("verified");
+
+    // leemos el query param ?verified=true
+    const verified = searchParams.get("verified") === "true";
 
     const {
         register,
@@ -29,16 +31,14 @@ export const LoginForm = () => {
 
     const onSubmit = async (data: LoginFormData) => {
         try {
-            setError(undefined); // Reset previous error
-            // Perform login action
+            setError(undefined);
             startTransition(async () => {
-                const response = await loginAction(data)
+                const response = await loginAction(data);
                 console.log(response);
                 if (response.error) {
-                    setError(response.error)
+                    setError(response.error);
                 } else {
-                    // Handle successful login, e.g., redirect or update UI
-                    router.push('/dashboard'); // Redirect to dashboard after login
+                    router.push('/dashboard');
                 }
             });
         } catch (error) {
@@ -47,14 +47,28 @@ export const LoginForm = () => {
     };
 
     return (
-        <form className="flex flex-col items-center gap-6 md:gap-8 w-8/10 max-w-md" onSubmit={handleSubmit(onSubmit)}>
+        <form
+            className="flex flex-col items-center gap-6 md:gap-8 w-8/10 max-w-md"
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            {/* Mensaje de email verificado */}
+            {verified && (
+                <div className="p-3 text-sm text-green-600 bg-green-100 border border-green-200 rounded-md w-full mb-2">
+                    {tAuth('emailVerifiedSuccessfully') /* o el key que uses */}
+                </div>
+            )}
+
             <Input
                 id="email"
                 type="email"
                 label={t('email')}
                 placeholder={t('emailPlaceholder')}
                 register={register('email')}
-                error={errors.email?.message ? tValidations(errors.email.message as any) : undefined}
+                error={
+                    errors.email?.message
+                        ? tValidations(errors.email.message as any)
+                        : undefined
+                }
             />
             <Input
                 id="password"
@@ -62,7 +76,11 @@ export const LoginForm = () => {
                 label={t('password')}
                 placeholder={t('passwordPlaceholder')}
                 register={register('password')}
-                error={errors.password?.message ? tValidations(errors.password.message as any) : undefined}
+                error={
+                    errors.password?.message
+                        ? tValidations(errors.password.message as any)
+                        : undefined
+                }
             />
 
             {error && (
@@ -71,8 +89,8 @@ export const LoginForm = () => {
                 </div>
             )}
 
-            <Button primary type="submit" disabled={isSubmitting}>
-                {isSubmitting ? '...' : tAuth('signIn')}
+            <Button primary type="submit" disabled={isSubmitting || isPending}>
+                {isSubmitting || isPending ? '...' : tAuth('signIn')}
             </Button>
         </form>
     )

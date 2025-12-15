@@ -61,11 +61,12 @@ model Session {
 }
 
 model VerificationToken {
-  identifier String   @id @unique
-  token      String
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
   expires    DateTime
 
-  @@map("verification_tokens")
+  @@unique([identifier, token])
 }
 
 model Client {
@@ -98,13 +99,13 @@ model Project {
   status         ProjectStatus        @default(ACTIVE)
   userId         String
   clientId       String?
-  order          Int                  @default(0)
   createdAt      DateTime             @default(now())
   updatedAt      DateTime             @updatedAt
   estimatedHours Decimal?             @db.Decimal(10, 2)
   hourlyRate     Decimal?             @db.Decimal(10, 2)
   priority       ProjectPriority      @default(MEDIUM)
   totalPrice     Decimal?             @db.Decimal(10, 2)
+  order          Int                  @default(0)
   invoices       Invoice[]
   requirements   ProjectRequirement[]
   client         Client?              @relation(fields: [clientId], references: [id])
@@ -209,7 +210,7 @@ model InvoiceItem {
   @@map("invoice_items")
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// Esta tabla es del sistema (PostGIS, etc.)
 model spatial_ref_sys {
   srid      Int     @id
   auth_name String? @db.VarChar(256)

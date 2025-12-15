@@ -6,7 +6,7 @@ import { TestimonialCard } from "../ui/TestimonialsCard";
 
 const TestimonialsSection = () => {
     return (
-        <section className="w-full py-20 overflow-hidden bg-(--bg-1)">
+        <section className="w-full py-20 max-md:py-10 overflow-hidden bg-(--bg-1)">
             <div className="mb-12 text-center px-4">
                 <motion.h2
                     initial={{ opacity: 0, y: 80 }}

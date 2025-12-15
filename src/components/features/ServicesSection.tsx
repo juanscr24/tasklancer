@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 export default function ServicesSection() {
     const t = useTranslations('hero');
     return (
-        <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-(--bg-1)">
+        <section className="w-full py-20 max-md:py-10 px-4 sm:px-6 lg:px-8 bg-(--bg-1)">
             <div className="max-w-7xl mx-auto">
                 
                 <div className="text-center mb-16 space-y-4">

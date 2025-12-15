@@ -45,10 +45,10 @@ export function CardFinancialSnapshot({ total, quotations }: CardFinancialSnapsh
                         ${Number(total).toFixed(2)} USD
                     </div>
                     <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
-                        <div className="text-xs font-medium text-green-300">
-                            {(total * 4200).toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
+                        <div className="text-sm font-medium text-green-700 dark:text-green-300">
+                            {(total * 4200).toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })} COP
                         </div>
-                        <div className="text-xs font-medium text-yellow-200">
+                        <div className="text-sm font-medium text-yellow-600 dark:text-yellow-200">
                             {(total * 0.92).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
                         </div>
                     </div>
@@ -63,7 +63,7 @@ export function CardFinancialSnapshot({ total, quotations }: CardFinancialSnapsh
                                     <div className="text-xs text-(--text-2) mt-0.5">{quote.clientName}</div>
                                 </div>
                                 <div className="text-right">
-                                    <div className="font-medium text-(--text-1)">${quote.totalPrice.toFixed(2)}</div>
+                                    <div className="font-medium text-(--text-1)">${quote.totalPrice.toFixed(2)} USD</div>
                                     <div className="text-xs text-(--text-2) mt-0.5">{quote.status}</div>
                                 </div>
                             </div>

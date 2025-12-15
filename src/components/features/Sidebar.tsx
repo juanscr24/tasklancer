@@ -99,10 +99,10 @@ export const Sidebar = ({ isMobileOpen = false, onMobileClose }: SidebarProps) =
                             href="/profile"
                             title={t('profile')}
                             onClick={handleLinkClick}
-                            className="flex gap-4 max-md:gap-0 items-center"
+                            className="flex max-md:gap-0 items-center"
                         >
                             <FaUser className="w-6 h-6 shrink-0" />
-                            <h3 className="text-md whitespace-nowrap">
+                            <h3 className="text-md ml-4 whitespace-nowrap">
                                 {t('profile')}
                             </h3>
                         </Link>

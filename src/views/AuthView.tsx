@@ -5,21 +5,24 @@ import { useTranslations } from "next-intl";
 import { LanguageSwitcher, AuthForm, AuthImage } from "@components";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { MenuOption } from "@/components/features/MenuOption";
 
-export const AuthView = () => {
+type AuthViewProps = {
+    isVerified?: boolean;
+};
+
+export const AuthView = ({ isVerified }: AuthViewProps) => {
     const t = useTranslations('auth');
     const [isLogin, setIsLogin] = useState(true);
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     const toggleForm = () => {
         setIsTransitioning(true);
-        // Esperamos a que termine la animación de salida antes de cambiar el formulario
         setTimeout(() => {
             setIsLogin(!isLogin);
-        }, 500); // Mitad de la duración de la transición (500ms / 2)
+        }, 500);
     };
 
-    // Cuando termina la transición quitamos el blur
     const handleTransitionEnd = () => {
         setIsTransitioning(false);
     };
@@ -37,35 +40,51 @@ export const AuthView = () => {
             >
                 <div className="w-full max-w-md flex flex-col items-center py-8 md:py-0">
                     <Link href="/" className="mb-4 md:mb-6">
-                        <Image className="w-12 h-12 md:w-14 md:h-14 bg-(--btn-1) rounded-md" src="/logo/logo.png" alt="Logo" width={200} height={200} />
+                        <Image
+                            className="w-12 h-12 md:w-14 md:h-14 bg-(--btn-1) rounded-md"
+                            src="/logo/logo.png"
+                            alt="Logo"
+                            width={200}
+                            height={200}
+                        />
                     </Link>
-                    <div className={`transition-all duration-500 ease-in-out ${
-                        isTransitioning 
-                            ? 'opacity-0 -translate-y-2' 
-                            : 'opacity-100 translate-y-0'
-                    }`}>
-                        <h2 className="text-2xl md:text-3xl font-bold text-(--text-1) text-center">{isLogin ? t('welcomeBack') : t('welcome')}</h2>
-                        <p className="text-base md:text-lg text-(--text-2) mb-6 md:mb-8 text-center">{isLogin ? t('loginSubtitle') : t('registerSubtitle')}</p>
+                    <div
+                        className={`transition-all duration-500 ease-in-out ${isTransitioning
+                                ? "opacity-0 -translate-y-2"
+                                : "opacity-100 translate-y-0"
+                            }`}
+                    >
+                        <h2 className="text-2xl md:text-3xl font-bold text-(--text-1) text-center">
+                            {isLogin ? t("welcomeBack") : t("welcome")}
+                        </h2>
+                        <p className="text-base md:text-lg text-(--text-2) mb-6 md:mb-8 text-center">
+                            {isLogin ? t("loginSubtitle") : t("registerSubtitle")}
+                        </p>
                     </div>
-                    
+
                     {/* FORM SECTION */}
                     <AuthForm
                         isLogin={isLogin}
                         isTransitioning={isTransitioning}
+                        isVerified={isVerified}
                     />
-                    
+
                     <div className="flex items-center gap-2 mt-5 w-fit flex-wrap justify-center">
-                        <p className="text-(--text-2) w-fit text-sm md:text-base">{isLogin ? t('dontHaveAccount') : t('alreadyHaveAccount')}</p>
+                        <p className="text-(--text-2) w-fit text-sm md:text-base">
+                            {isLogin ? t("dontHaveAccount") : t("alreadyHaveAccount")}
+                        </p>
                         <button
                             type="button"
                             onClick={toggleForm}
                             className="p-0 text-(--btn-1) cursor-pointer w-fit text-sm md:text-base font-medium hover:underline"
                         >
-                            {isLogin ? t('signUp') : t('signIn')}
+                            {isLogin ? t("signUp") : t("signIn")}
                         </button>
                     </div>
                 </div>
-                <LanguageSwitcher className="absolute top-3 right-3" />
+                <div className="absolute top-8 right-8">
+                    <MenuOption />
+                </div>
             </div>
 
             {/* IMAGE SECTION */}
@@ -75,5 +94,5 @@ export const AuthView = () => {
                 isTransitioning={isTransitioning}
             />
         </div>
-    )
-}
+    );
+};

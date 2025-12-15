@@ -1,5 +1,6 @@
 import { ButtonMode, LanguageSwitcher, SearchBar } from '@/components';
 import { Bell, Menu } from 'lucide-react';
+import { MenuOption } from './MenuOption';
 
 interface HeaderSearchProps {
     className?: string
@@ -23,8 +24,7 @@ export const HeaderSearch = ({ className, onMenuClick }: HeaderSearchProps) => {
 
             {/* Notification Bell */}
             <div className='flex items-center gap-10 max-md:gap-3 p-2'>
-                <LanguageSwitcher />
-                <ButtonMode />
+                <MenuOption />
             </div>
         </header>
     )

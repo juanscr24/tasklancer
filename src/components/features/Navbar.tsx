@@ -14,6 +14,7 @@ import {
     img_logo_icon_text_dark,
     img_logo_icon_text
 } from "../../../public/images/logos";
+import { MenuOption } from "./MenuOption";
 
 const Navbar = () => {
     const t = useTranslations('navbar');
@@ -115,35 +116,39 @@ const Navbar = () => {
                     </div>
 
                     {/* Navegación */}
-                    <div className="flex items-center gap-6">
-                        <div className="hidden md:flex gap-6 items-center">
-                            <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-6 max-md:gap-0">
+                        <div className="md:hidden">
+                        <MenuOption />
+                        </div>
+                        <div className="flex gap-6 max-lg:gap-4 items-center">
+                            <div className="max-md:hidden flex gap-4 items-center text-(--text-2)">
+                                <LanguageSwitcher />
                                 <ButtonMode />
-                                <LanguageSwitcher className="relative" />
                             </div>
 
                             {/* Separador */}
-                            <div className="h-6 w-px bg-(--text-2)/20"></div>
+                            <div className="h-6 w-px bg-(--text-2)/20 max-md:hidden"></div>
+                            <div className="hidden md:flex gap-6 items-center">
+                                <Link
+                                    href="/#contact"
+                                    onClick={scrollToContact}
+                                    className="text-sm font-medium text-(--text-2) hover:text-(--text-1) transition-colors">
+                                    Contact
+                                </Link>
 
-                            <Link
-                                href="/#contact"
-                                onClick={scrollToContact}
-                                className="text-sm font-medium text-(--text-2) hover:text-(--text-1) transition-colors">
-                                Contact
-                            </Link>
-
-                            {/* Link de Services actualizado con scroll suave */}
-                            <Link
-                                href="/#services" // Apunta al ID
-                                onClick={scrollToServices} // Ejecuta la función
-                                className="text-sm font-medium text-(--text-2) hover:text-(--text-1) transition-colors">
-                                Services
-                            </Link>
+                                {/* Link de Services actualizado con scroll suave */}
+                                <Link
+                                    href="/#services" // Apunta al ID
+                                    onClick={scrollToServices} // Ejecuta la función
+                                    className="text-sm font-medium text-(--text-2) hover:text-(--text-1) transition-colors">
+                                    Services
+                                </Link>
+                            </div>
                         </div>
 
                         <Link
                             href="/auth"
-                            className="px-6 py-2.5 rounded-lg bg-(--btn-1) text-white font-semibold text-sm shadow-sm hover:opacity-90 transition-all active:scale-95">
+                            className="max-md:hidden px-6 py-2.5 rounded-lg bg-(--btn-1) text-white font-semibold text-sm shadow-sm hover:opacity-90 transition-all active:scale-95">
                             Start Now
                         </Link>
                     </div>

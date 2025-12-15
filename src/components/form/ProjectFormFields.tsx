@@ -63,7 +63,7 @@ export const ProjectFormFields = ({
             </div>
 
             {/* Client & Status in two columns */}
-            <div className="grid grid-cols-1 max-sm:grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Client Selection */}
                 <div>
                     <label htmlFor="client" className="block text-sm font-medium text-(--text-1) mb-2">
@@ -99,7 +99,7 @@ export const ProjectFormFields = ({
             </div>
 
             {/* Icon & Color in two columns */}
-            <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Icon Selection */}
                 <div>
                     <label className="block text-sm font-medium text-(--text-1) mb-2">
@@ -111,13 +111,13 @@ export const ProjectFormFields = ({
                                 key={icon.value}
                                 type="button"
                                 onClick={() => onChange('icon', icon.value)}
-                                className={`p-2 rounded-lg border-2 transition-all duration-200 ${formData.icon === icon.value
+                                className={`p-2 sm:p-3 rounded-lg border-2 transition-all duration-200 ${formData.icon === icon.value
                                     ? 'border-(--btn-1) bg-(--btn-1)/10'
                                     : 'border-(--bg-2) hover:border-(--btn-1)/50'
                                     }`}
                                 title={icon.label}
                             >
-                                <div className="text-2xl text-center">{icon.value}</div>
+                                <div className="text-xl sm:text-2xl text-center">{icon.value}</div>
                             </button>
                         ))}
                     </div>
@@ -128,13 +128,13 @@ export const ProjectFormFields = ({
                     <label className="block text-sm font-medium text-(--text-1) mb-2">
                         {t('fields.color.label')}
                     </label>
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid grid-cols-4 gap-2 sm:gap-4">
                         {PROJECT_COLORS.map((color) => (
                             <button
                                 key={color}
                                 type="button"
                                 onClick={() => onChange('color', color)}
-                                className={`w-full h-12 rounded-lg transition-all duration-200 ${formData.color === color
+                                className={`w-full h-10 sm:h-12 rounded-lg transition-all duration-200 ${formData.color === color
                                     ? 'ring-2 ring-offset-2 ring-(--btn-1)'
                                     : 'hover:scale-105'
                                     }`}

@@ -123,7 +123,7 @@ export const NewProjectModal = ({
                 />
 
                 {/* Action Buttons */}
-                <div className="flex gap-3 pt-4">
+                <div className="flex flex-col-reverse sm:flex-row gap-3 pt-4">
                     <Button
                         type="button"
                         onClick={onClose}

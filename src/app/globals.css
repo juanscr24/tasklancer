@@ -2,6 +2,32 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Firefox */
+* {
+  scrollbar-width: thin;              /* ancho del scroll */
+  scrollbar-color: var(--bg-1) var(--bg-2);   /* thumb color | track color */
+}
+
+/* Chrome, Edge y Safari */
+*::-webkit-scrollbar {
+  width: 8px;               /* ancho del scroll */
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--bg-1);      /* color del track */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--bg-2); /* color del thumb */
+  border-radius: var(--bg-3);
+  border: 2px solid var(--bg-1);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--bg-2);
+}
+
+
 @theme {
     /* 🎨 COLORES BASE (se sobreescriben según el tema) */
     --bg-1: #FFFFFF;
